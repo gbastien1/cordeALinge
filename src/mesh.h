@@ -28,8 +28,8 @@ class CVertex : public CPoint3D {
 public:
     CVertex(int _idx, const CPoint3D& P, const float& _u, const float& _v) :
         CPoint3D(P),
-        //u(_u),
-        //v(_v),
+        u(_u),
+        v(_v),
         idx(_idx)
     {}
     

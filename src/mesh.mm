@@ -365,32 +365,49 @@ void CMesh::Draw(GLint prog)
 }
 
 
-
 /* 
- * Added custom mesh shapes
+ * GB
+ * rectangle shape formed with two triangles
  */
 class Rectangle : public CMesh {
-    
-    int width, height;
-    
-    /**
-     * Create vertices and indices for drawing
-     * a rectangle in local coordinates
-     */
     Rectangle(int width, int height) {
-        // TODO populate vertices vector with CVertex*
-        // create 2 CTriangle with vertices
+
+        //first, init vertices with number of vertices. This allows the use 
+        //of bracket operator to push vertex in the vector
         for (int i = 0; i < 4; i++) {
             vertices.push_back(NULL);
         }
-        vertices[0] = new CVertex(0, CPoint3D(0, 0, 0), 0.0, 0.0);
-        vertices[1] = new CVertex(1, CPoint3D(0, height, 0), 0.0, 0.0);
-        vertices[2] = new CVertex(2, CPoint3D(width, height, 0), 0.0, 0.0);
-        vertices[3] = new CVertex(3, CPoint3D(width, 0, 0), 0.0, 0.0);
+
+        //create vertices and add them to vertices vector, with u,v coords
+        vertices[0] = new CVertex(0, CPoint3D(0, 0, 0),          0.0, 0.0);
+        vertices[1] = new CVertex(1, CPoint3D(0, height, 0),     0.0, 1.0);
+        vertices[2] = new CVertex(2, CPoint3D(width, height, 0), 1.0, 1.0);
+        vertices[3] = new CVertex(3, CPoint3D(width, 0, 0),      1.0, 0.0);
         
+        //create corresponding triangles
         CTriangle* tri1(new CTriangle(vertices[0], vertices[1], vertices[2]));
         CTriangle* tri2(new CTriangle(vertices[0], vertices[2], vertices[3]));
         triangles.push_back(tri1);
         triangles.push_back(tri2);
+        
+        //adjacent triangles
+        vertices[0].triangles.push_back(tri1);
+        vertices[0].triangles.push_back(tri2);
+        vertices[1].triangles.push_back(tri1);
+        vertices[2].triangles.push_back(tri1);
+        vertices[2].triangles.push_back(tri2);
+        vertices[3].triangles.push_back(tri2);
+    }
+};
+
+/**
+ * class to draw a line between two points
+ * TODO enough to write only 2 vertices?
+ */
+class Line : public CMesh {
+public:
+    Line(CPoint3D p1, CPoint3D p2) {
+        vertices.push_back(0, p1, 0.0, 0.0);
+        vertices.push_back(1, p2, 0.0, 0.0);
     }
 };

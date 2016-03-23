@@ -11,6 +11,11 @@
 
 using namespace std;
 
+/**
+ * Definition of C++ functions
+ */
+void loadCustomMeshes();
+
 
 static
 NSArray* open_files(NSArray* filetype_ext)
@@ -137,6 +142,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
 
     /* call function to load custom meshes */
     //TODO LOAD MESHES WITH C++ CODE
+    loadCustomMeshes();
     
     
     GetGLError();
@@ -356,7 +362,7 @@ static const float rot_factor = 0.25;
     //cout << "calc_frame : " << test_counter++ << endl;
     
     //** TODO FAIRE LE DESSIN ICI.
-    
+    //appeler draw sur chaque mesh ?
     [self setNeedsDisplay:YES];
 }
 
@@ -391,5 +397,11 @@ static const float rot_factor = 0.25;
 
 
 void loadCustomMeshes() {
+    // plane
+    plane = new Rectangle(100, 100); 
     
+    //creer poteau1
+    //creer poteau2
+    //creer corde
+    //creer drap
 }
