@@ -136,7 +136,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     mesh->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
 
     /* call function to load custom meshes */
-    
+    //TODO LOAD MESHES WITH C++ CODE
     
     
     GetGLError();
@@ -388,3 +388,8 @@ static const float rot_factor = 0.25;
 	[super dealloc];
 }
 @end
+
+
+void loadCustomMeshes() {
+    
+}
