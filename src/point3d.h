@@ -9,7 +9,7 @@ typedef CPoint3D CVect3D;
 // 
 //  Par:   Yves Chiricota
 //  Date:  12/09/99
-//  MAJ:    
+//  MAJ:    8trd147
 // --------------------------------------------------------------------------------
 class CPoint3D  {
 public:

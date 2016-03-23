@@ -17,7 +17,7 @@ class CMesh;
     
     float mouse_x0, mouse_y0;
     
-    CMesh*      mesh;
+    CMesh*      mesh, *sheet, *post_left, *post_right, *line, *plane;
     CRenderer*  renderer;
     NSTimer*    frame_timer;
 }

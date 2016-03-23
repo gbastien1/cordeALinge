@@ -126,7 +126,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     
     NSString* file_path_name = nil;
         
-    file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
+    //file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
     [self load_mesh:[file_path_name cStringUsingEncoding:NSUTF8StringEncoding]];
     
     NSURL* url = [[NSBundle mainBundle] resourceURL];
@@ -135,6 +135,9 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     file_path_name = [[NSBundle mainBundle] pathForResource:@"texture" ofType:@"jpg"];
     mesh->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
 
+    /* call function to load custom meshes */
+    
+    
     
     GetGLError();
 }
@@ -353,8 +356,7 @@ static const float rot_factor = 0.25;
     //cout << "calc_frame : " << test_counter++ << endl;
     
     //** TODO FAIRE LE DESSIN ICI.
-    // est-ce qu'on draw chaque CMesh séparément?
-    // 
+    
     [self setNeedsDisplay:YES];
 }
 
