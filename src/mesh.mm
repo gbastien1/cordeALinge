@@ -394,3 +394,68 @@ class Rectangle : public CMesh {
         triangles.push_back(tri2);
     }
 };
+
+class Drap : public CMesh {
+    
+    Drap() {
+        
+        for (int i = 0; i < 1200; i++) {
+            vertices.push_back(NULL);
+        }
+        
+        
+        int compteurVertice = 0;
+        
+        for(int i = 0; i < 40; i++)
+        {
+            for(int j = 0; j < 30; j++)
+            {
+                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + ((float)(i/10)), 6 - ((float)(j/10)), 0), 0.0, 0.0);
+                compteurVertice++;
+            }
+        }
+        
+        
+        for(int i = 0; i < 39; i++)
+        {
+            for(int j = 0; j < 29; j++)
+            {
+                if(i % 2 == 0)
+                {
+                    if(j % 2 == 0)
+                    {
+                        CTriangle* tri1(new CTriangle(vertices[(i * 40) + j], vertices[(i * 40) + (j + 1)], vertices[((i + 1) * 40) + (j + 1)]));
+                        CTriangle* tri2(new CTriangle(vertices[(i * 40) + j], vertices[((i + 1) * 40) + (j + 1)], vertices[((i + 1) * 40) + j]));
+                        triangles.push_back(tri1);
+                        triangles.push_back(tri2);
+                    }
+                    else
+                    {
+                        CTriangle* tri1(new CTriangle(vertices[(i * 40) + j], vertices[(i * 40) + (j + 1)], vertices[((i + 1) * 40) + j]));
+                        CTriangle* tri2(new CTriangle(vertices[(i * 40) + (j + 1)], vertices[((i + 1) * 40) + (j + 1)], vertices[((i + 1) * 40) + j]));
+                        triangles.push_back(tri1);
+                        triangles.push_back(tri2);
+                    }
+                }
+                else
+                {
+                    if(j % 2 == 0)
+                    {
+                        CTriangle* tri1(new CTriangle(vertices[(i * 40) + j], vertices[(i * 40) + (j + 1)], vertices[((i + 1) * 40) + j]));
+                        CTriangle* tri2(new CTriangle(vertices[(i * 40) + (j + 1)], vertices[((i + 1) * 40) + (j + 1)], vertices[((i + 1) * 40) + j]));
+                        triangles.push_back(tri1);
+                        triangles.push_back(tri2);
+                    }
+                    else
+                    {
+                        CTriangle* tri1(new CTriangle(vertices[(i * 40) + j], vertices[(i * 40) + (j + 1)], vertices[((i + 1) * 40) + (j + 1)]));
+                        CTriangle* tri2(new CTriangle(vertices[(i * 40) + j], vertices[((i + 1) * 40) + (j + 1)], vertices[((i + 1) * 40) + j]));
+                        triangles.push_back(tri1);
+                        triangles.push_back(tri2);
+                    }
+                }
+            }
+        }
+    }
+};
+
