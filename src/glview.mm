@@ -140,8 +140,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     file_path_name = [[NSBundle mainBundle] pathForResource:@"texture" ofType:@"jpg"];
     mesh->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
 
-    /* call function to load custom meshes */
-    //TODO LOAD MESHES WITH C++ CODE
+    /* call function to load custom meshes (plane, posts...) */
     loadCustomMeshes();
     
     

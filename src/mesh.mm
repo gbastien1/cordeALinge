@@ -19,6 +19,7 @@
 using namespace std;
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
+#define PI 3.14159265
 
 
 // Facteur de grossissemement du mesh lors de la lecture de fichiers ply.
@@ -401,6 +402,7 @@ class Rectangle : public CMesh {
 };
 
 /**
+ * GB
  * class to draw a line between two points
  * TODO enough to write only 2 vertices?
  */
@@ -412,17 +414,93 @@ public:
     }
 };
 
-class Drap : public CMesh {
-    
-    Drap() {
+/**
+ * GB
+ * class for post objects
+ * TODO: check u,v coords, probably dont work because 
+ * supposed to be in range 0..1, but in range -1..1
+ */
+class Post : public CMesh {
+public: 
+    Post(int height, int radius, int slices) {
+        float theta = (2 * PI ) / slices;
+        int u, v;
+
+        //define vertices for top circle
+        vertices.push_back(0, CPoint3D(0, height, 0), 0.5, 0.5); //center of top circle
+        for (int i = 0; i < slices; i++) {
+            u = cos(theta*i);
+            v = sin(theta*i);
+            vertices.push_back(i+1, CPoint3D(radius*cos(theta*i), height, radius*sin(theta*i)), u, v);
+        }
+
+        //define vertices for bottom circle
+        vertices.push_back(slices + 1, CPoint3D(0, 0, 0), 0.5, 0.5); //center of bottom circle
+        for (int i = slices; i < slices*2; i++) {
+            u = cos(theta*i);
+            v = sin(theta*i);
+            vertices.push_back(i+2, CPoint3D(radius*cos(theta*i), 0, radius*sin(theta*i)), u, v);
+        }
         
+        //define triangles for top circle
+        for (int i = 1; i <= slices; i++) {
+            CTriangle* tri(new CTriangle(vertices[0], vertices[i], vertices[i+1]));
+            triangles.push_back(tri);
+
+            //adjacent triangles
+            vertices[0].triangles.push_back(tri);
+            vertices[i].triangles.push_back(tri);
+            vertices[i+1].triangles.push_back(tri);
+        }
+        
+        //define triangles for bottom circle
+        for (int i = slices; i <= slices*2; i++) {
+            CTriangle* tri(new CTriangle(vertices[slices+1], vertices[i+2], vertices[i+3]));
+            triangles.push_back(tri);
+
+            //adjacent triangles
+            vertices[slices+1].triangles.push_back(tri);
+            vertices[i+2].triangles.push_back(tri);
+            vertices[i+3].triangles.push_back(tri);
+        }
+        
+        //define triangles for sides
+        for (int i = 0; i < slices*2; i++) { //2 triangles per side
+            if (i % 2 == 0) {
+                CTriangle* tri(new CTriangle(vertices[i+1], vertices[i+2], vertices[i + slices + 1]));
+                triangles.push_back(tri);
+
+                //adjacent triangles
+                vertices[i+1].triangles.push_back(tri);
+                vertices[i+2].triangles.push_back(tri);
+                vertices[i+slices+1].triangles.push_back(tri);
+            }
+            else {
+                CTriangle* tri(new CTriangle(vertices[i+2], vertices[i + slices + 2], vertices[i + slices + 1]));
+                triangles.push_back(tri);
+
+                //adjacent triangles
+                vertices[i+2].triangles.push_back(tri);
+                vertices[i+slices+2].triangles.push_back(tri);
+                vertices[i+slices+1].triangles.push_back(tri);
+            }
+        }
+    }
+};
+
+
+/**
+ * ABD
+ * class to draw the sheet that will de distorted with "wind"
+ */
+class Drap : public CMesh {
+public:
+    Drap() {
         for (int i = 0; i < 1200; i++) {
             vertices.push_back(NULL);
         }
         
-        
         int compteurVertice = 0;
-        
         for(int i = 0; i < 40; i++)
         {
             for(int j = 0; j < 30; j++)
@@ -431,7 +509,6 @@ class Drap : public CMesh {
                 compteurVertice++;
             }
         }
-        
         
         for(int i = 0; i < 39; i++)
         {
