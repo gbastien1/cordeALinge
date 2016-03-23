@@ -352,8 +352,9 @@ static const float rot_factor = 0.25;
     //static long test_counter = 0;
     //cout << "calc_frame : " << test_counter++ << endl;
     
-    //** FAIRE LE DESSIN ICI.
-    
+    //** TODO FAIRE LE DESSIN ICI.
+    // est-ce qu'on draw chaque CMesh séparément?
+    // 
     [self setNeedsDisplay:YES];
 }
 
