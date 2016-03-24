@@ -364,12 +364,27 @@ static const float rot_factor = 0.25;
     //Set modelview matrix before render. keep base modelview to reinit it each time
     //TODO on peut seter rotx, roty, rotz pour la rotation de la modelview, 
     //mais on ne peut que seter camposz pour translater en z, mais pas en x et y ?
+    // rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
+
+    //TODO changer les valeurs de rotation et translation pour faire fitter la scene
     [renderer render:[plane CMesh*]];
+
+    renderer.camposx = -10.0;
     [renderer render:[post1 CMesh*]];
+
+    renderer.reinitializeCamTransformations();
+    renderer.camposx = 10.0;
     [renderer render:[post2 CMesh*]];
+
+    renderer.reinitializeCamTransformations();
+    renderer.camposy = 10.0;
     [renderer render:[line CMesh*]];
+
+    renderer.reinitializeCamTransformations();
+    renderer.camposy = 2.0;
     [renderer render:[drap CMesh*]];
-    
+    //end TODO
+
     [self setNeedsDisplay:YES];
 }
 

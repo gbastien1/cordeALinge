@@ -65,7 +65,11 @@ GLfloat mat_diffuse[] = {0.2, 0.2, 0.2};
 GLuint view_width;
 GLuint view_height;
 
-GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposz = -10.0;
+GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;  //GB added camposx and camposy
+
+void reinitializeCamTransformations() {
+	rotx = 0.0; roty = 0.0; rotz = 0.0; camposx = 0.0; camposy = 0.0; camposz = -10.0;
+}
 
 // Incrémente les angles.
 -(void)incr_rot:(float)dx :(float)dy :(float)dz
@@ -300,8 +304,6 @@ GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposz = -10.0;
     glUniform1f(loc, val);
 }
 
-
-
 - (void)render:(CMesh*)mesh
 {
     GLfloat viewdir_matrix[16];        // Matrice sans la translation (pour le cube map et le skybox).
@@ -314,7 +316,7 @@ GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposz = -10.0;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
-    mtxLoadTranslate(model_view_matrix, 0, 0.0, camposz);
+    mtxLoadTranslate(model_view_matrix, camposx, camposy, camposz); //GB added camposx and camposy instead of 0 and 0.0
     mtxRotateXApply(model_view_matrix, rotx);
     mtxRotateYApply(model_view_matrix, roty);
     mtxRotateZApply(model_view_matrix, rotz);
