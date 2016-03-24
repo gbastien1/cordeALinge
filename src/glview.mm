@@ -360,8 +360,16 @@ static const float rot_factor = 0.25;
     //static long test_counter = 0;
     //cout << "calc_frame : " << test_counter++ << endl;
     
-    //** TODO FAIRE LE DESSIN ICI.
-    //appeler draw sur chaque mesh ?
+    //** FAIRE LE DESSIN ICI.
+    //Set modelview matrix before render. keep base modelview to reinit it each time
+    //TODO on peut seter rotx, roty, rotz pour la rotation de la modelview, 
+    //mais on ne peut que seter camposz pour translater en z, mais pas en x et y ?
+    [renderer render:[plane CMesh*]];
+    [renderer render:[post1 CMesh*]];
+    [renderer render:[post2 CMesh*]];
+    [renderer render:[line CMesh*]];
+    [renderer render:[drap CMesh*]];
+    
     [self setNeedsDisplay:YES];
 }
 
