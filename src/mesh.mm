@@ -392,12 +392,12 @@ class Rectangle : public CMesh {
         triangles.push_back(tri2);
         
         //adjacent triangles
-        vertices[0].triangles.push_back(tri1);
-        vertices[0].triangles.push_back(tri2);
-        vertices[1].triangles.push_back(tri1);
-        vertices[2].triangles.push_back(tri1);
-        vertices[2].triangles.push_back(tri2);
-        vertices[3].triangles.push_back(tri2);
+        vertices[0]->triangles.push_back(tri1);
+        vertices[0]->triangles.push_back(tri2);
+        vertices[1]->triangles.push_back(tri1);
+        vertices[2]->triangles.push_back(tri1);
+        vertices[2]->triangles.push_back(tri2);
+        vertices[3]->triangles.push_back(tri2);
     }
 };
 
@@ -409,8 +409,8 @@ class Rectangle : public CMesh {
 class Line : public CMesh {
 public:
     Line(CPoint3D p1, CPoint3D p2) {
-        vertices.push_back(0, p1, 0.0, 0.0);
-        vertices.push_back(1, p2, 0.0, 0.0);
+        vertices.push_back(new CVertex(0, p1, 0.0, 0.0));
+        vertices.push_back(new CVertex(1, p2, 0.0, 0.0));
     }
 };
 
@@ -427,19 +427,19 @@ public:
         int u, v;
 
         //define vertices for top circle
-        vertices.push_back(0, CPoint3D(0, height, 0), 0.5, 0.5); //center of top circle
+        vertices.push_back(new CVertex(0, CPoint3D(0, height, 0), 0.5, 0.5)); //center of top circle
         for (int i = 0; i < slices; i++) {
             u = cos(theta*i);
             v = sin(theta*i);
-            vertices.push_back(i+1, CPoint3D(radius*cos(theta*i), height, radius*sin(theta*i)), u, v);
+            vertices.push_back(new CVertex(i+1, CPoint3D(radius*cos(theta*i), height, radius*sin(theta*i)), u, v));
         }
 
         //define vertices for bottom circle
-        vertices.push_back(slices + 1, CPoint3D(0, 0, 0), 0.5, 0.5); //center of bottom circle
+        vertices.push_back(new CVertex(slices + 1, CPoint3D(0, 0, 0), 0.5, 0.5)); //center of bottom circle
         for (int i = slices; i < slices*2; i++) {
             u = cos(theta*i);
             v = sin(theta*i);
-            vertices.push_back(i+2, CPoint3D(radius*cos(theta*i), 0, radius*sin(theta*i)), u, v);
+            vertices.push_back(new CVertex(i+2, CPoint3D(radius*cos(theta*i), 0, radius*sin(theta*i)), u, v));
         }
         
         //define triangles for top circle
@@ -448,9 +448,9 @@ public:
             triangles.push_back(tri);
 
             //adjacent triangles
-            vertices[0].triangles.push_back(tri);
-            vertices[i].triangles.push_back(tri);
-            vertices[i+1].triangles.push_back(tri);
+            vertices[0]->triangles.push_back(tri);
+            vertices[i]->triangles.push_back(tri);
+            vertices[i+1]->triangles.push_back(tri);
         }
         
         //define triangles for bottom circle
@@ -459,9 +459,9 @@ public:
             triangles.push_back(tri);
 
             //adjacent triangles
-            vertices[slices+1].triangles.push_back(tri);
-            vertices[i+2].triangles.push_back(tri);
-            vertices[i+3].triangles.push_back(tri);
+            vertices[slices+1]->triangles.push_back(tri);
+            vertices[i+2]->triangles.push_back(tri);
+            vertices[i+3]->triangles.push_back(tri);
         }
         
         //define triangles for sides
@@ -471,18 +471,18 @@ public:
                 triangles.push_back(tri);
 
                 //adjacent triangles
-                vertices[i+1].triangles.push_back(tri);
-                vertices[i+2].triangles.push_back(tri);
-                vertices[i+slices+1].triangles.push_back(tri);
+                vertices[i+1]->triangles.push_back(tri);
+                vertices[i+2]->triangles.push_back(tri);
+                vertices[i+slices+1]->triangles.push_back(tri);
             }
             else {
                 CTriangle* tri(new CTriangle(vertices[i+2], vertices[i + slices + 2], vertices[i + slices + 1]));
                 triangles.push_back(tri);
 
                 //adjacent triangles
-                vertices[i+2].triangles.push_back(tri);
-                vertices[i+slices+2].triangles.push_back(tri);
-                vertices[i+slices+1].triangles.push_back(tri);
+                vertices[i+2]->triangles.push_back(tri);
+                vertices[i+slices+2]->triangles.push_back(tri);
+                vertices[i+slices+1]->triangles.push_back(tri);
             }
         }
     }
