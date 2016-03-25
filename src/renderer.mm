@@ -51,6 +51,8 @@ enum {
 
 @implementation CRenderer
 
+
+
 // Variable globales (c'est pas idéal, mais c'est un prototype).
 GLuint shader_prog_name;
 GLint uniform_mvp_matrix_idx;
@@ -61,11 +63,25 @@ GLfloat light_pos[] = {0.0, 30.0, 30.0};
 GLfloat mat_ambiant[] = {0.2, 0.2, 0.2};
 GLfloat mat_diffuse[] = {0.2, 0.2, 0.2};
 
+GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;  //GB added camposx and camposy
 
 GLuint view_width;
 GLuint view_height;
 
-GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;  //GB added camposx and camposy
+void setRotx(GLfloat rx) {rotx = rx;}
+void setRoty(GLfloat ry) {roty = ry;}
+void setRotz(GLfloat rz) {rotz = rz;}
+void setCamposx(GLfloat cx) {camposx = cx;}
+void setCamposy(GLfloat cy) {camposy = cy;}
+void setCamposz(GLfloat cz) {camposz = cz;}
+
+GLfloat getRotx() {return rotx;}
+GLfloat getRoty() {return roty;}
+GLfloat getRotz() {return rotz;}
+GLfloat getCamposx() {return camposx;}
+GLfloat getCamposy() {return camposy;}
+GLfloat getCamposz() {return camposz;}
+
 
 void reinitializeCamTransformations() {
 	rotx = 0.0; roty = 0.0; rotz = 0.0; camposx = 0.0; camposy = 0.0; camposz = -10.0;

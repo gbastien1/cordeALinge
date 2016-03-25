@@ -29,6 +29,7 @@
 		B1D0C7DB1A289DF9007E1C2A /* mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1D0C7D71A289DF9007E1C2A /* mesh.mm */; };
 		B1D0C7DC1A289DF9007E1C2A /* point3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D0C7D91A289DF9007E1C2A /* point3d.cpp */; };
 		B1E1E2F51A3A3FA100386427 /* mur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1E1E2F21A3A3FA100386427 /* mur.jpg */; };
+		ECAD626F1CA59198001FF085 /* Components.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECAD626D1CA59198001FF085 /* Components.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,8 @@
 		B1D0C7D91A289DF9007E1C2A /* point3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = point3d.cpp; path = src/point3d.cpp; sourceTree = "<group>"; };
 		B1D0C7DA1A289DF9007E1C2A /* point3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = point3d.h; path = src/point3d.h; sourceTree = "<group>"; };
 		B1E1E2F21A3A3FA100386427 /* mur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = mur.jpg; path = models/mur.jpg; sourceTree = "<group>"; };
+		ECAD626D1CA59198001FF085 /* Components.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Components.cpp; path = src/Components.cpp; sourceTree = "<group>"; };
+		ECAD626E1CA59198001FF085 /* Components.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Components.hpp; path = src/Components.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 				B123563A18C376B900D5EC60 /* windowcontroller.h */,
 				B123563918C376B900D5EC60 /* windowcontroller.mm */,
 				B123563B18C376B900D5EC60 /* main.m */,
+				ECAD626D1CA59198001FF085 /* Components.cpp */,
+				ECAD626E1CA59198001FF085 /* Components.hpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B132F6E818C37B700020FC7D /* imageutil.mm in Sources */,
+				ECAD626F1CA59198001FF085 /* Components.cpp in Sources */,
 				B123564018C376B900D5EC60 /* main.m in Sources */,
 				B1D0C7DB1A289DF9007E1C2A /* mesh.mm in Sources */,
 				B123563D18C376B900D5EC60 /* glview.mm in Sources */,

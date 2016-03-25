@@ -3,6 +3,7 @@
 #import "renderer.h"
 
 #include "mesh.h"
+#include "Components.hpp"
 
 #include <stdio.h>
 #include <iostream>
@@ -10,12 +11,6 @@
 #include <string>
 
 using namespace std;
-
-/**
- * Definition of C++ functions
- */
-void loadCustomMeshes();
-
 
 static
 NSArray* open_files(NSArray* filetype_ext)
@@ -61,6 +56,23 @@ NSArray* open_files(NSArray* filetype_ext)
         delete mesh;
     
     mesh = new CMesh;
+
+    // plane
+    plane = new Rectangle(100, 100);
+    
+    //creer poteau1
+    post1 = new Cylinder(5,20,6);
+    
+    //creer poteau2
+    post2 = new Cylinder(5,20,6);
+    
+    //creer corde
+    line = new Line(0,0);
+    
+    //creer drap
+    drap = new Drap();
+    
+    
     
     ifstream f_in(fply);
     if ( !f_in.is_open() || !mesh->ReadPLY(f_in) )
@@ -139,9 +151,6 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     
     file_path_name = [[NSBundle mainBundle] pathForResource:@"texture" ofType:@"jpg"];
     mesh->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
-
-    /* call function to load custom meshes (plane, posts...) */
-    loadCustomMeshes();
     
     
     GetGLError();
@@ -367,22 +376,22 @@ static const float rot_factor = 0.25;
     // rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
 
     //TODO changer les valeurs de rotation et translation pour faire fitter la scene
-    [renderer render:[plane CMesh*]];
+    [renderer render:plane];
 
-    renderer.camposx = -10.0;
-    [renderer render:[post1 CMesh*]];
+    //renderer->setCamposx(-10.0);
+    [renderer render:post1 ];
 
-    renderer.reinitializeCamTransformations();
-    renderer.camposx = 10.0;
-    [renderer render:[post2 CMesh*]];
+    //rendererreinitializeCamTransformations();
+    //renderer.camposx = 10.0;
+    [renderer render:post2];
 
-    renderer.reinitializeCamTransformations();
-    renderer.camposy = 10.0;
-    [renderer render:[line CMesh*]];
+    //renderer->reinitializeCamTransformations();
+    //renderer.camposy = 10.0;
+    [renderer render:line];
 
-    renderer.reinitializeCamTransformations();
-    renderer.camposy = 2.0;
-    [renderer render:[drap CMesh*]];
+    //renderer.reinitializeCamTransformations();
+    //renderer.camposy = 2.0;
+    [renderer render:drap];
     //end TODO
 
     [self setNeedsDisplay:YES];
@@ -417,13 +426,3 @@ static const float rot_factor = 0.25;
 }
 @end
 
-
-void loadCustomMeshes() {
-    // plane
-    plane = new Rectangle(100, 100); 
-    
-    //creer poteau1
-    //creer poteau2
-    //creer corde
-    //creer drap
-}
