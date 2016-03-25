@@ -11,7 +11,6 @@ class CSkyBox;
     float rotx, roty, rotz;
 }
 
-
 -(id) init;
 -(void) resizeWithWidth:(GLuint)width AndHeight:(GLuint)height;
 -(void) render:(CMesh*)mesh;
@@ -24,5 +23,6 @@ class CSkyBox;
 -(void)set_ambiant_contrib:(float)val;
 -(void)set_spec_contrib:(float)val;
 -(void)set_mat_shininess:(float)val;
+
 
 @end
