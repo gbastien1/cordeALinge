@@ -150,18 +150,18 @@ public:
         }
         
         int compteurVertice = 0;
-        for(int i = 0; i < 40; i++)
+        for(int i = 0; i < 30; i++)
         {
-            for(int j = 0; j < 30; j++)
+            for(int j = 0; j < 40; j++)
             {
-                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + ((float)(i/10)), 6 - ((float)(j/10)), 0), 0.0, 0.0);
+                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + ((float)(j/10)), 6 - ((float)(i/10)), 0), 0.0, 0.0);
                 compteurVertice++;
             }
         }
         
-        for(int i = 0; i < 39; i++)
+        for(int i = 0; i < 29; i++)
         {
-            for(int j = 0; j < 29; j++)
+            for(int j = 0; j < 39; j++)
             {
                 if(i % 2 == 0)
                 {
