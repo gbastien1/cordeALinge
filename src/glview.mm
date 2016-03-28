@@ -132,22 +132,30 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     
     // plane
     //plane = new Rectangle(8, 8);
+    //plane->UpdateNormals();
+    //plane->AllocVBOData();
     
     //creer poteau1
     cout << "creation of post1" << endl;
-    post1 = new Cylinder(60,2,6);
-    
-    //creer poteau2
-    /*post2 = new Cylinder(6,0.2,6);
-     
-     //creer corde
-     line = new Line(0,0);
-     
-     //creer drap
-     drap = new Drap();*/
-    
+    post1 = new Cylinder(6,0.2,6);
     post1->UpdateNormals();
     post1->AllocVBOData();
+    
+    //creer poteau2
+    post2 = new Cylinder(6,0.2,6);
+    post2->UpdateNormals();
+    post2->AllocVBOData();
+    
+    //creer corde
+    //line = new Line(0,0);
+    //line->UpdateNormals();
+    //line->AllocVBOData();
+     
+    //creer drap
+    //drap = new Drap();
+    //drap->UpdateNormals();
+    //drap->AllocVBOData();
+    
     
     
     /*NSURL* url = [[NSBundle mainBundle] resourceURL];
@@ -382,8 +390,8 @@ static const float rot_factor = 0.25;
     //[renderer render:plane];
 
     //renderer->setCamposx(-10.0);
-    cout << "render post1 in calc frame\n";
-    [renderer render:post1];
+    //cout << "render post1 in calc frame\n";
+    //[renderer render:post1];
 
     //rendererreinitializeCamTransformations();
     //renderer.camposx = 10.0;
@@ -416,6 +424,18 @@ static const float rot_factor = 0.25;
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
     [renderer render:mesh];
+    
+
+    cout << "render post1 in calc frame\n";
+    //[renderer render:plane];
+    
+    [renderer render:post1];
+    
+    [renderer render:post2];
+    
+    //[renderer render:line];
+    
+    //[renderer render:drap];
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);

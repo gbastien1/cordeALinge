@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include <math.h>
 #include "mesh.h"
+#include <iostream>
+
+using namespace std;
 
 #endif /* Components_hpp */
 
@@ -73,7 +76,7 @@ public:
 #define PI 3.14159265
 class Cylinder : public CMesh {
 public:
-    Cylinder(int height, int radius, int slices) {
+    Cylinder(float height, float radius, int slices) {
         float theta = (2 * PI ) / slices;
         int u, v;
         
@@ -134,6 +137,8 @@ public:
                 vertices[i+slices+2]->triangles.push_back(tri2);
                 vertices[i+slices+1]->triangles.push_back(tri2);
         }
+        
+
     }
 };
 
@@ -146,7 +151,7 @@ class Drap : public CMesh {
 public:
     Drap() {
         for (int i = 0; i < 1200; i++) {
-            vertices.push_back(NULL);
+            //vertices.push_back(NULL);
         }
         
         int compteurVertice = 0;
@@ -154,8 +159,9 @@ public:
         {
             for(int j = 0; j < 40; j++)
             {
-                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + ((float)(j/10)), 6 - ((float)(i/10)), 0), 0.0, 0.0);
+                vertices.push_back(new CVertex(compteurVertice, CPoint3D(-2 + ((float)(j/10)), 6 - ((float)(i/10)), 0), 0.0, 0.0));
                 compteurVertice++;
+                
             }
         }
         
@@ -198,6 +204,12 @@ public:
                     }
                 }
             }
+        }
+        
+        
+        for(int i =0 ; i < vertices.size(); i++){
+            //print vertices
+            cout << "vertex " << i << " : " << vertices[i][0] << " " << vertices[i][1] << " " << vertices[i][2];
         }
     }
 };
