@@ -31,8 +31,8 @@ public:
         
         //create vertices and add them to vertices vector, with u,v coords
         vertices[0] = new CVertex(0, CPoint3D(0, 0, 0),          0.0, 0.0);
-        vertices[1] = new CVertex(1, CPoint3D(0, height, 0),     0.0, 1.0);
-        vertices[2] = new CVertex(2, CPoint3D(width, height, 0), 1.0, 1.0);
+        vertices[1] = new CVertex(1, CPoint3D(0, 0, height),     0.0, 1.0);
+        vertices[2] = new CVertex(2, CPoint3D(width, 0, height), 1.0, 1.0);
         vertices[3] = new CVertex(3, CPoint3D(width, 0, 0),      1.0, 0.0);
         
         //create corresponding triangles

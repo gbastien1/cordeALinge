@@ -99,6 +99,8 @@ public:
     
     friend std::ostream& operator<<(std::ostream&, const CMesh&);
     
+    void    UpdateNormals();
+    
 protected:
     
     // OpenGL
@@ -114,7 +116,7 @@ protected:
     std::vector<CVertex*>    vertices;
     std::list<CTriangle*>    triangles;
 
-    void    UpdateNormals();
+    
 };
 
 
