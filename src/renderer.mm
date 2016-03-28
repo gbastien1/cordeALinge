@@ -63,13 +63,11 @@ GLfloat light_pos[] = {0.0, 30.0, 30.0};
 GLfloat mat_ambiant[] = {0.2, 0.2, 0.2};
 GLfloat mat_diffuse[] = {0.2, 0.2, 0.2};
 
-GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;  //GB added camposx and camposy
-
 GLuint view_width;
 GLuint view_height;
 
 
--(void) reinitializeCamTransformations {
+-(void) initializeCamTransformations {
 	rotx = 0.0; roty = 0.0; rotz = 0.0; camposx = 0.0; camposy = 0.0; camposz = -10.0;
 }
 
@@ -257,6 +255,7 @@ GLuint view_height;
         glEnable(GL_CULL_FACE);
         glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		
+        [self initializeCamTransformations];
 		
  	}
 	
