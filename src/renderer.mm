@@ -68,22 +68,8 @@ GLfloat rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, campos
 GLuint view_width;
 GLuint view_height;
 
-void setRotx(GLfloat rx) {rotx = rx;}
-void setRoty(GLfloat ry) {roty = ry;}
-void setRotz(GLfloat rz) {rotz = rz;}
-void setCamposx(GLfloat cx) {camposx = cx;}
-void setCamposy(GLfloat cy) {camposy = cy;}
-void setCamposz(GLfloat cz) {camposz = cz;}
 
-GLfloat getRotx() {return rotx;}
-GLfloat getRoty() {return roty;}
-GLfloat getRotz() {return rotz;}
-GLfloat getCamposx() {return camposx;}
-GLfloat getCamposy() {return camposy;}
-GLfloat getCamposz() {return camposz;}
-
-
-void reinitializeCamTransformations() {
+-(void) reinitializeCamTransformations {
 	rotx = 0.0; roty = 0.0; rotz = 0.0; camposx = 0.0; camposy = 0.0; camposz = -10.0;
 }
 
