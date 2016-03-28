@@ -127,13 +127,13 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     NSString* file_path_name = nil;
     
     //DRAGON
-    //file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
-    //[self load_mesh:[file_path_name cStringUsingEncoding:NSUTF8StringEncoding]];
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
+    [self load_mesh:[file_path_name cStringUsingEncoding:NSUTF8StringEncoding]];
     
     // plane
-    //plane = new Rectangle(8, 8);
-    //plane->UpdateNormals();
-    //plane->AllocVBOData();
+    plane = new Rectangle(8, 8);
+    plane->UpdateNormals();
+    plane->AllocVBOData();
     
     //creer poteau1
     cout << "creation of post1" << endl;
@@ -147,14 +147,14 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     post2->AllocVBOData();
     
     //creer corde
-    //line = new Line(0,0);
-    //line->UpdateNormals();
-    //line->AllocVBOData();
+    line = new Line(0,0);
+    line->UpdateNormals();
+    line->AllocVBOData();
      
     //creer drap
-    //drap = new Drap();
-    //drap->UpdateNormals();
-    //drap->AllocVBOData();
+    drap = new Drap();
+    drap->UpdateNormals();
+    drap->AllocVBOData();
     
     
     
@@ -386,29 +386,6 @@ static const float rot_factor = 0.25;
     //mais on ne peut que seter camposz pour translater en z, mais pas en x et y ?
     // rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
 
-    //TODO changer les valeurs de rotation et translation pour faire fitter la scene
-    //[renderer render:plane];
-
-    //renderer->setCamposx(-10.0);
-    //cout << "render post1 in calc frame\n";
-    //[renderer render:post1];
-
-    //rendererreinitializeCamTransformations();
-    //renderer.camposx = 10.0;
-    /*[renderer render:post2];
-
-    //renderer->reinitializeCamTransformations();
-    //renderer.camposy = 10.0;
-    [renderer render:line];
-
-    //renderer.reinitializeCamTransformations();
-    //renderer.camposy = 2.0;
-    [renderer render:drap];*/
-    //end TODO
-
-    /*post1->UpdateNormals();
-    
-    post1->AllocVBOData();*/
     
     [self setNeedsDisplay:YES];
 }
@@ -420,22 +397,26 @@ static const float rot_factor = 0.25;
 }
 
 - (void) draw_view
-{	 
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
     [renderer render:mesh];
     
 
     cout << "render post1 in calc frame\n";
-    //[renderer render:plane];
+    [renderer render:plane];
     
     [renderer render:post1];
     
     [renderer render:post2];
     
-    //[renderer render:line];
+    [renderer render:line];
     
-    //[renderer render:drap];
+    [renderer render:drap];
+    
+    
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
