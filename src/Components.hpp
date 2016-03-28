@@ -150,16 +150,43 @@ public:
 class Drap : public CMesh {
 public:
     Drap() {
-        for (int i = 0; i < 1200; i++) {
-            //vertices.push_back(NULL);
+        
+        for (int i = 0; i < 4; i++) {
+            vertices.push_back(NULL);
+        }
+        
+        //create vertices and add them to vertices vector, with u,v coords
+        vertices[0] = new CVertex(0, CPoint3D(0, 0, 1),          0.0, 0.0);
+        vertices[1] = new CVertex(1, CPoint3D(1, 0, 1),     0.0, 1.0);
+        vertices[2] = new CVertex(2, CPoint3D(1, 0, 0), 1.0, 1.0);
+        vertices[3] = new CVertex(3, CPoint3D(0, 0, 0),      1.0, 0.0);
+        
+        //create corresponding triangles
+        CTriangle* tri1(new CTriangle(vertices[0], vertices[1], vertices[2]));
+        CTriangle* tri2(new CTriangle(vertices[0], vertices[2], vertices[3]));
+        triangles.push_back(tri1);
+        triangles.push_back(tri2);
+        
+        //adjacent triangles
+        vertices[0]->triangles.push_back(tri1);
+        vertices[0]->triangles.push_back(tri2);
+        vertices[1]->triangles.push_back(tri1);
+        vertices[2]->triangles.push_back(tri1);
+        vertices[2]->triangles.push_back(tri2);
+        vertices[3]->triangles.push_back(tri2);
+        
+        
+        /*for (int i = 0; i < 1200; i++) {
+            vertices.push_back(NULL);
         }
         
         int compteurVertice = 0;
-        for(int i = 0; i < 30; i++)
+        for(float i = 0; i < 30; i++)
         {
-            for(int j = 0; j < 40; j++)
+            for(float j = 0; j < 40; j++)
             {
-                vertices.push_back(new CVertex(compteurVertice, CPoint3D(-2 + ((float)(j/10)), 6 - ((float)(i/10)), 0), 0.0, 0.0));
+                vertices.push_back(new CVertex(compteurVertice, CPoint3D(-2 + (j/10), 6 - (i/10), 0), 0.0, 0.0));
+                
                 compteurVertice++;
                 
             }
@@ -210,6 +237,6 @@ public:
         for(int i =0 ; i < vertices.size(); i++){
             //print vertices
             cout << "vertex " << i << " : " << vertices[i][0] << " " << vertices[i][1] << " " << vertices[i][2];
-        }
+        }*/
     }
 };
