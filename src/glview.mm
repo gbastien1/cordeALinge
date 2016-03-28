@@ -408,6 +408,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 - (void) draw_view
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    int baseCamZ = -10;
     
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
@@ -416,22 +417,29 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     rx = renderer->rotx; ry = renderer->roty; rz = renderer->rotz;
     cx = renderer->camposx; cy = renderer->camposy; cz = renderer->camposz;
 
-    cout << "render post1 in calc frame\n";
+    //cout << "render post1 in calc frame\n";
+    renderer->camposx = -4.0;
+    renderer->camposz = -4.0 + baseCamZ;
     [renderer render:plane];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
-    renderer->camposx = 0.0;
+    renderer->camposx = -3.0;
     [renderer render:post1];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
-    renderer->camposx = 2.0;
+    renderer->camposx = 3.0;
     [renderer render:post2];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     [renderer render:line];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
+    //renderer->rotx = 0.0;
+    //renderer->roty = 0.0;
+    //renderer->rotz = 0.0;
     [renderer render:drap];
+    
+    setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
