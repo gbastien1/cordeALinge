@@ -59,6 +59,12 @@ GLint uniform_mvp_matrix_idx;
 GLint uniform_model_view_matrix_idx;
 GLint uniform_normal_matrix_idx;
 
+//AL 2nd Shader
+GLuint shader_wave_prog_name;
+GLint uniform_mvp_matrix_idx_wave;
+GLint uniform_model_view_matrix_idx_wave;
+GLint uniform_normal_matrix_idx_wave;
+
 GLfloat light_pos[] = {0.0, 30.0, 30.0};
 GLfloat mat_ambiant[] = {0.2, 0.2, 0.2};
 GLfloat mat_diffuse[] = {0.2, 0.2, 0.2};
@@ -231,12 +237,23 @@ GLuint view_height;
 		
         shader_source_data *vtxSource = NULL;
 		shader_source_data *frgSource = NULL;
+        //AL 2nd Shader
+        shader_source_data *vtxWaveSource = NULL;
+        shader_source_data *frgWaveSource = NULL;
 		
 		file_path_name = [[NSBundle mainBundle] pathForResource:@"generic" ofType:@"vsh"];
 		vtxSource = shader_source_load([file_path_name cStringUsingEncoding:NSASCIIStringEncoding]);
 		
 		file_path_name = [[NSBundle mainBundle] pathForResource:@"generic" ofType:@"fsh"];
 		frgSource = shader_source_load([file_path_name cStringUsingEncoding:NSASCIIStringEncoding]);
+        
+        //AL 2nd Shader
+        file_path_name = [[NSBundle mainBundle] pathForResource:@"wave" ofType:@"vsh"];
+        vtxWaveSource = shader_source_load([file_path_name cStringUsingEncoding:NSASCIIStringEncoding]);
+        
+        file_path_name = [[NSBundle mainBundle] pathForResource:@"wave" ofType:@"fsh"];
+        frgWaveSource = shader_source_load([file_path_name cStringUsingEncoding:NSASCIIStringEncoding]);
+        
 		
 		shader_prog_name = [self build_prog:vtxSource with_fragment_src:frgSource];
 
@@ -247,9 +264,23 @@ GLuint view_height;
         uniform_mvp_matrix_idx = glGetUniformLocation(shader_prog_name, "modelview_proj_matrix");
         uniform_model_view_matrix_idx = glGetUniformLocation(shader_prog_name, "modelview_matrix");
         uniform_normal_matrix_idx = glGetUniformLocation(shader_prog_name, "normal_matrix");
+        
+        //AL 2nd Shader
+        shader_wave_prog_name = [self build_prog:vtxWaveSource with_fragment_src:frgWaveSource];
+        
+        glUseProgram(shader_wave_prog_name);
+        loc = glGetUniformLocation(shader_wave_prog_name, "tex_diffuse");
+        glUniform1i(loc, 0);
+        
+        uniform_mvp_matrix_idx_wave = glGetUniformLocation(shader_wave_prog_name, "modelview_proj_matrix");
+        uniform_model_view_matrix_idx_wave = glGetUniformLocation(shader_wave_prog_name, "modelview_matrix");
+        uniform_normal_matrix_idx_wave = glGetUniformLocation(shader_wave_prog_name, "normal_matrix");
 
         shader_source_destroy(vtxSource);
         shader_source_destroy(frgSource);
+        //AL 2nd Shader
+        shader_source_destroy(vtxWaveSource);
+        shader_source_destroy(frgWaveSource);
 
 		glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
@@ -354,6 +385,56 @@ GLuint view_height;
     }
 }
 
+
+//AL 2nd Shader
+- (void)renderWave:(CMesh*)mesh
+{
+    GLfloat viewdir_matrix[16];        // Matrice sans la translation (pour le cube map et le skybox).
+    GLfloat model_view_matrix[16];
+    GLfloat projection_matrix[16];
+    GLfloat normal_matrix[9];
+    GLfloat mvp_matrix[16];
+    GLfloat vp_matrix[16];
+    
+    
+    mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
+    mtxLoadTranslate(model_view_matrix, camposx, camposy, camposz); //GB added camposx and camposy instead of 0 and 0.0
+    mtxRotateXApply(model_view_matrix, rotx);
+    mtxRotateYApply(model_view_matrix, roty);
+    mtxRotateZApply(model_view_matrix, rotz);
+    
+    mtxLoadIdentity(viewdir_matrix);
+    mtxRotateXApply(viewdir_matrix, rotx);
+    mtxRotateYApply(viewdir_matrix, roty);
+    mtxRotateZApply(viewdir_matrix, rotz);
+    
+    mtxMultiply(mvp_matrix, projection_matrix, model_view_matrix);
+    mtxMultiply(vp_matrix, projection_matrix, viewdir_matrix);
+    
+    
+    mtx3x3FromTopLeftOf4x4(normal_matrix, model_view_matrix);
+    mtx3x3Invert(normal_matrix, normal_matrix);
+    
+    
+    if ( mesh )
+    {
+        glUseProgram(shader_wave_prog_name);
+        
+        glUniformMatrix4fv(uniform_mvp_matrix_idx_wave, 1, GL_FALSE, mvp_matrix);
+        glUniformMatrix4fv(uniform_model_view_matrix_idx_wave, 1, GL_FALSE, model_view_matrix);
+        glUniformMatrix3fv(uniform_normal_matrix_idx_wave, 1, GL_FALSE, normal_matrix);
+        //glUniformMatrix3fv(uniform_viewdir_matrix_idx_wave, 1, GL_FALSE, viewdir_matrix);
+        glUniformMatrix4fv(uniform_mvp_matrix_idx_wave, 1, GL_FALSE, mvp_matrix);
+        
+        GLuint loc = glGetUniformLocation(shader_wave_prog_name, "light_pos");
+        glUniform3f(loc, light_pos[0], light_pos[1], light_pos[2]);
+        
+        loc = glGetUniformLocation(shader_wave_prog_name, "cam_pos");
+        glUniform3f(loc, normal_matrix[6], normal_matrix[7], normal_matrix[8]);
+        
+        mesh->Draw(shader_wave_prog_name);
+    }
+}
 
 
 @end

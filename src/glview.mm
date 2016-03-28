@@ -164,14 +164,14 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     file_path_name = [[NSBundle mainBundle] pathForResource:@"stromgol" ofType:@"jpg"];
     plane->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
     
-    file_path_name = [[NSBundle mainBundle] pathForResource:@"logo" ofType:@"jpg"];
-    drap->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
-    
     file_path_name = [[NSBundle mainBundle] pathForResource:@"mur" ofType:@"jpg"];
     post1->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
     
     file_path_name = [[NSBundle mainBundle] pathForResource:@"mur" ofType:@"jpg"];
     post2->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
+    
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"logo" ofType:@"jpg"];
+    drap->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
     
     GetGLError();
 }
@@ -440,6 +440,8 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     [renderer render:line];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
+    //AL 2nd Shader
+    //[renderer renderWave:drap];
     [renderer render:drap];
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
