@@ -405,24 +405,41 @@ static const float rot_factor = 0.25;
 	[self draw_view];
 }
 
+void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, GLfloat cx, GLfloat cy, GLfloat cz) {
+    renderer->rotx = rx; renderer->roty = ry; renderer->rotz = rz;
+    renderer->camposx = cx; renderer->camposy = cy; renderer->camposz = cz;
+}
+/*- (void) setModelviewAttr:(GLfloat)rx:ry(GLfloat)ry:rz(GLfloat)rz:cx(GLfloat)cx:cy(GLfloat)cy:cz(GLfloat)cz {
+    renderer->rotx = rx; renderer->roty = ry; renderer->rotz = rz;
+    renderer->camposx = cx; renderer->camposy = cy; renderer->camposz = cz;
+}*/
+
 - (void) draw_view
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
-    [renderer render:mesh];
-    
+    //[renderer render:mesh];
+    GLfloat rx, ry, rz, cx, cy, cz;
+    rx = renderer->rotx; ry = renderer->roty; rz = renderer->rotz;
+    cx = renderer->camposx; cy = renderer->camposy; cz = renderer->camposz;
 
     cout << "render post1 in calc frame\n";
     [renderer render:plane];
     
+    setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
+    renderer->camposx = 0.0;
     [renderer render:post1];
     
+    setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
+    renderer->camposx = 2.0;
     [renderer render:post2];
     
+    setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     [renderer render:line];
     
+    setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     [renderer render:drap];
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
