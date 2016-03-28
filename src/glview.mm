@@ -158,11 +158,20 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     
     
     
-    /*NSURL* url = [[NSBundle mainBundle] resourceURL];
+    NSURL* url = [[NSBundle mainBundle] resourceURL];
     file_path_name = [url path];
     
-    file_path_name = [[NSBundle mainBundle] pathForResource:@"texture" ofType:@"jpg"];
-    mesh->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));*/
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"stromgol" ofType:@"jpg"];
+    plane->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
+    
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"logo" ofType:@"jpg"];
+    drap->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
+    
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"mur" ofType:@"jpg"];
+    post1->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
+    
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"mur" ofType:@"jpg"];
+    post2->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
     
     GetGLError();
 }

@@ -29,6 +29,8 @@
 		B1D0C7DB1A289DF9007E1C2A /* mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1D0C7D71A289DF9007E1C2A /* mesh.mm */; };
 		B1D0C7DC1A289DF9007E1C2A /* point3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D0C7D91A289DF9007E1C2A /* point3d.cpp */; };
 		B1E1E2F51A3A3FA100386427 /* mur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1E1E2F21A3A3FA100386427 /* mur.jpg */; };
+		ECACCC171CA9AECE00CE8ABB /* stromgol.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECACCC161CA9AECE00CE8ABB /* stromgol.jpg */; settings = {ASSET_TAGS = (); }; };
+		ECACCC1D1CA9B03C00CE8ABB /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECACCC1C1CA9B03C00CE8ABB /* logo.jpg */; settings = {ASSET_TAGS = (); }; };
 		ECAD626F1CA59198001FF085 /* Components.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECAD626D1CA59198001FF085 /* Components.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,8 @@
 		B1D0C7D91A289DF9007E1C2A /* point3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = point3d.cpp; path = src/point3d.cpp; sourceTree = "<group>"; };
 		B1D0C7DA1A289DF9007E1C2A /* point3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = point3d.h; path = src/point3d.h; sourceTree = "<group>"; };
 		B1E1E2F21A3A3FA100386427 /* mur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = mur.jpg; path = models/mur.jpg; sourceTree = "<group>"; };
+		ECACCC161CA9AECE00CE8ABB /* stromgol.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = stromgol.jpg; path = models/stromgol.jpg; sourceTree = "<group>"; };
+		ECACCC1C1CA9B03C00CE8ABB /* logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = logo.jpg; path = models/logo.jpg; sourceTree = "<group>"; };
 		ECAD626D1CA59198001FF085 /* Components.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Components.cpp; path = src/Components.cpp; sourceTree = "<group>"; };
 		ECAD626E1CA59198001FF085 /* Components.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Components.hpp; path = src/Components.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +189,8 @@
 		B1F9DDB51A3CA78000C1304C /* models */ = {
 			isa = PBXGroup;
 			children = (
+				ECACCC1C1CA9B03C00CE8ABB /* logo.jpg */,
+				ECACCC161CA9AECE00CE8ABB /* stromgol.jpg */,
 				B1BA5AAF1AADE48E00CCA889 /* texture.jpg */,
 				B1C00F001A72DC730019A985 /* model.ply */,
 				B1E1E2F21A3A3FA100386427 /* mur.jpg */,
@@ -246,10 +252,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1BA5AB01AADE48E00CCA889 /* texture.jpg in Resources */,
+				ECACCC171CA9AECE00CE8ABB /* stromgol.jpg in Resources */,
 				B1C00F011A72DC730019A985 /* model.ply in Resources */,
 				B1E1E2F51A3A3FA100386427 /* mur.jpg in Resources */,
 				3A1598E411B9DDF3001E7AB5 /* generic.vsh in Resources */,
 				3A1598E511B9DDF3001E7AB5 /* generic.fsh in Resources */,
+				ECACCC1D1CA9B03C00CE8ABB /* logo.jpg in Resources */,
 				B123565618C376FB00D5EC60 /* 8trd147-d2-Info.plist in Resources */,
 				B123565518C376FB00D5EC60 /* MainMenu.xib in Resources */,
 				B123565718C376FB00D5EC60 /* InfoPlist.strings in Resources */,
