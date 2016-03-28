@@ -329,7 +329,6 @@ void reinitializeCamTransformations() {
     GLfloat mvp_matrix[16];
     GLfloat vp_matrix[16];
     
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
     mtxLoadTranslate(model_view_matrix, camposx, camposy, camposz); //GB added camposx and camposy instead of 0 and 0.0
