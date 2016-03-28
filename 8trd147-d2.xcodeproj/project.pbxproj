@@ -32,6 +32,8 @@
 		ECACCC171CA9AECE00CE8ABB /* stromgol.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECACCC161CA9AECE00CE8ABB /* stromgol.jpg */; settings = {ASSET_TAGS = (); }; };
 		ECACCC1D1CA9B03C00CE8ABB /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECACCC1C1CA9B03C00CE8ABB /* logo.jpg */; settings = {ASSET_TAGS = (); }; };
 		ECAD626F1CA59198001FF085 /* Components.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECAD626D1CA59198001FF085 /* Components.cpp */; settings = {ASSET_TAGS = (); }; };
+		ECE9A2BD1CA9C314001128EE /* wave.fsh in Resources */ = {isa = PBXBuildFile; fileRef = ECE9A2BC1CA9C314001128EE /* wave.fsh */; settings = {ASSET_TAGS = (); }; };
+		ECE9A2BF1CA9C31B001128EE /* wave.vsh in Resources */ = {isa = PBXBuildFile; fileRef = ECE9A2BE1CA9C31B001128EE /* wave.vsh */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		ECACCC1C1CA9B03C00CE8ABB /* logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = logo.jpg; path = models/logo.jpg; sourceTree = "<group>"; };
 		ECAD626D1CA59198001FF085 /* Components.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Components.cpp; path = src/Components.cpp; sourceTree = "<group>"; };
 		ECAD626E1CA59198001FF085 /* Components.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Components.hpp; path = src/Components.hpp; sourceTree = "<group>"; };
+		ECE9A2BC1CA9C314001128EE /* wave.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = wave.fsh; path = shaders/wave.fsh; sourceTree = "<group>"; };
+		ECE9A2BE1CA9C31B001128EE /* wave.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = wave.vsh; path = shaders/wave.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +184,8 @@
 		3A1598C211B9DD84001E7AB5 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				ECE9A2BE1CA9C31B001128EE /* wave.vsh */,
+				ECE9A2BC1CA9C314001128EE /* wave.fsh */,
 				3A1598E011B9DDF3001E7AB5 /* generic.vsh */,
 				3A1598E111B9DDF3001E7AB5 /* generic.fsh */,
 			);
@@ -257,10 +263,12 @@
 				B1E1E2F51A3A3FA100386427 /* mur.jpg in Resources */,
 				3A1598E411B9DDF3001E7AB5 /* generic.vsh in Resources */,
 				3A1598E511B9DDF3001E7AB5 /* generic.fsh in Resources */,
+				ECE9A2BF1CA9C31B001128EE /* wave.vsh in Resources */,
 				ECACCC1D1CA9B03C00CE8ABB /* logo.jpg in Resources */,
 				B123565618C376FB00D5EC60 /* 8trd147-d2-Info.plist in Resources */,
 				B123565518C376FB00D5EC60 /* MainMenu.xib in Resources */,
 				B123565718C376FB00D5EC60 /* InfoPlist.strings in Resources */,
+				ECE9A2BD1CA9C314001128EE /* wave.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
