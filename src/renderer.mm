@@ -345,12 +345,13 @@ GLuint view_height;
     GLfloat mvp_matrix[16];
     GLfloat vp_matrix[16];
     
-    
+    float startCamPosZ = -5.0;
     mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
-    mtxLoadTranslate(model_view_matrix, camposx, camposy, camposz); //GB added camposx and camposy instead of 0 and 0.0
+    mtxLoadTranslate(model_view_matrix, 0, -5.0, startCamPosZ); //GB added camposx and camposy instead of 0 and 0.0
     mtxRotateXApply(model_view_matrix, rotx);
     mtxRotateYApply(model_view_matrix, roty);
     mtxRotateZApply(model_view_matrix, rotz);
+    mtxTranslateApply(model_view_matrix, camposx, camposy, camposz);
     
     mtxLoadIdentity(viewdir_matrix);
     mtxRotateXApply(viewdir_matrix, rotx);
