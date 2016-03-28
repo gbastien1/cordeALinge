@@ -185,7 +185,7 @@ public:
         {
             for(float j = 0; j < 40; j++)
             {
-                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + (j/10), 6 - (i/10), 0), 0.0, 0.0);
+                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + (j/10), 6 - (i/10), 0), (j / 40), ((i / 30)));
                 
                 compteurVertice++;
                 
