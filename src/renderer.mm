@@ -354,6 +354,13 @@ GLuint view_height;
     glUniform1f(loc, val);
 }
 
+-(void)set_time:(float)val
+{
+    glUseProgram(shader_wave_prog_name);
+    GLuint loc = glGetUniformLocation(shader_wave_prog_name, "time");
+    glUniform1f(loc, val);
+}
+
 - (void)render:(CMesh*)mesh
 {
     GLfloat viewdir_matrix[16];        // Matrice sans la translation (pour le cube map et le skybox).
