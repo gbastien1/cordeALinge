@@ -170,7 +170,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     file_path_name = [[NSBundle mainBundle] pathForResource:@"mur" ofType:@"jpg"];
     post2->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
     
-    file_path_name = [[NSBundle mainBundle] pathForResource:@"logo" ofType:@"jpg"];
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"batman" ofType:@"jpg"];
     drap->set_diffuse_tex_id(gl_load_texture2D([file_path_name cStringUsingEncoding:NSUTF8StringEncoding]));
     
     GetGLError();
