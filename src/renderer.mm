@@ -298,6 +298,7 @@ GLuint view_height;
     // PATCH: Effacer les ressources ogl ici.
 	//glDeleteTextures(1, &tex_name);
     glDeleteProgram(shader_prog_name);
+    glDeleteProgram(shader_wave_prog_name);
 }
 
 - (void) dealloc
@@ -314,11 +315,20 @@ GLuint view_height;
     glUseProgram(shader_prog_name);
     GLuint loc = glGetUniformLocation(shader_prog_name, "diffuse_contrib");
     glUniform1f(loc, val);
+    
+    glUseProgram(shader_wave_prog_name);
+    loc = glGetUniformLocation(shader_wave_prog_name, "diffuse_contrib");
+    glUniform1f(loc, val);
 }
 
 -(void)set_ambiant_contrib:(float)val
 {
+    glUseProgram(shader_prog_name);
     GLuint loc = glGetUniformLocation(shader_prog_name, "ambiant_contrib");
+    glUniform1f(loc, val);
+    
+    glUseProgram(shader_wave_prog_name);
+    loc = glGetUniformLocation(shader_wave_prog_name, "ambiant_contrib");
     glUniform1f(loc, val);
 }
 
@@ -327,12 +337,20 @@ GLuint view_height;
     glUseProgram(shader_prog_name);
     GLuint loc = glGetUniformLocation(shader_prog_name, "spec_contrib");
     glUniform1f(loc, val);
+    
+    glUseProgram(shader_wave_prog_name);
+    loc = glGetUniformLocation(shader_wave_prog_name, "spec_contrib");
+    glUniform1f(loc, val);
 }
 
 -(void)set_mat_shininess:(float)val
 {
     glUseProgram(shader_prog_name);
     GLuint loc = glGetUniformLocation(shader_prog_name, "mat_shininess");
+    glUniform1f(loc, val);
+    
+    glUseProgram(shader_wave_prog_name);
+    loc = glGetUniformLocation(shader_wave_prog_name, "mat_shininess");
     glUniform1f(loc, val);
 }
 
@@ -397,12 +415,13 @@ GLuint view_height;
     GLfloat mvp_matrix[16];
     GLfloat vp_matrix[16];
     
-    
+    float startCamPosZ = -5.0;
     mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
-    mtxLoadTranslate(model_view_matrix, camposx, camposy, camposz); //GB added camposx and camposy instead of 0 and 0.0
+    mtxLoadTranslate(model_view_matrix, 0, -5.0, startCamPosZ); //GB added camposx and camposy instead of 0 and 0.0
     mtxRotateXApply(model_view_matrix, rotx);
     mtxRotateYApply(model_view_matrix, roty);
     mtxRotateZApply(model_view_matrix, rotz);
+    mtxTranslateApply(model_view_matrix, camposx, camposy, camposz);
     
     mtxLoadIdentity(viewdir_matrix);
     mtxRotateXApply(viewdir_matrix, rotx);

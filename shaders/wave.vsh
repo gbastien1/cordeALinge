@@ -26,7 +26,7 @@ void main (void)
     V = normalize(vec3(modelview_matrix*pos));
     var_light_pos = normal_matrix*light_pos;
     
-	gl_Position	= modelview_proj_matrix*modelview_matrix*pos;
+	gl_Position	= modelview_proj_matrix*pos;
 }
 
 

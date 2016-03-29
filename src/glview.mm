@@ -409,10 +409,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     renderer->rotx = rx; renderer->roty = ry; renderer->rotz = rz;
     renderer->camposx = cx; renderer->camposy = cy; renderer->camposz = cz;
 }
-/*- (void) setModelviewAttr:(GLfloat)rx:ry(GLfloat)ry:rz(GLfloat)rz:cx(GLfloat)cx:cy(GLfloat)cy:cz(GLfloat)cz {
-    renderer->rotx = rx; renderer->roty = ry; renderer->rotz = rz;
-    renderer->camposx = cx; renderer->camposy = cy; renderer->camposz = cz;
-}*/
+
 
 - (void) draw_view
 {
@@ -444,13 +441,10 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
 
-    //renderer->rotx = 0.0;
-    //renderer->roty = 0.0;
-    //renderer->rotz = 0.0;
 
     //AL 2nd Shader
-    //[renderer renderWave:drap];
-    [renderer render:drap];
+    [renderer renderWave:drap];
+    //[renderer render:drap];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
