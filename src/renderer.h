@@ -18,6 +18,7 @@ class CSkyBox;
 -(id) init;
 -(void) resizeWithWidth:(GLuint)width AndHeight:(GLuint)height;
 -(void) render:(CMesh*)mesh;
+-(void) renderLine:(CMesh*)mesh;
 //AL 2nd Shader
 -(void) renderWave:(CMesh*)mesh;
 -(void) dealloc;
