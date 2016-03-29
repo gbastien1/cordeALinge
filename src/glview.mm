@@ -147,7 +147,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     post2->AllocVBOData();
     
     //creer corde
-    line = new Line(0,0);
+    line = new Line(-3,3);
     line->UpdateNormals();
     line->AllocVBOData();
      
@@ -440,7 +440,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     [renderer render:post2];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
-    [renderer render:line];
+    [renderer renderLine:line];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
 

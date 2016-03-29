@@ -364,3 +364,35 @@ void CMesh::Draw(GLint prog)
     glDisableVertexAttribArray(attrib_normal);
 }
 
+void CMesh::DrawLine(GLint prog)
+{
+    attrib_position = glGetAttribLocation(prog, "pos");
+    attrib_texcoord = glGetAttribLocation(prog, "texcoord");
+    attrib_normal = glGetAttribLocation(prog, "N0");
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, diffuse_tex_id);
+    shader_setuniform(prog, "tex_diffuse", 0);
+    
+    
+    glBindVertexArray(vao_id);
+    
+    glEnableVertexAttribArray(attrib_position);
+    glEnableVertexAttribArray(attrib_texcoord);
+    glEnableVertexAttribArray(attrib_normal);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, ogl_buf_vextex_id);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ogl_buf_index_id);
+    
+    glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, vertex_data_size(), BUFFER_OFFSET(0));
+    glVertexAttribPointer(attrib_normal, 3, GL_FLOAT, GL_FALSE, vertex_data_size(), BUFFER_OFFSET(12));
+    glVertexAttribPointer(attrib_texcoord, 2, GL_FLOAT, GL_FALSE, vertex_data_size(), BUFFER_OFFSET(24));
+    
+    unsigned int indices[] = {0, 1};
+    
+    glDrawElements(GL_LINE, 2, GL_UNSIGNED_INT, indices);
+    
+    glDisableVertexAttribArray(attrib_position);
+    glDisableVertexAttribArray(attrib_texcoord);
+    glDisableVertexAttribArray(attrib_normal);
+}

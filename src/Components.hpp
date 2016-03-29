@@ -61,9 +61,13 @@ public:
  */
 class Line : public CMesh {
 public:
-    Line(CPoint3D p1, CPoint3D p2) {
-        vertices.push_back(new CVertex(0, p1, 0.0, 0.0));
-        vertices.push_back(new CVertex(1, p2, 0.0, 0.0));
+    Line(float p1, float p2) {
+        vertices.push_back(NULL);
+        vertices.push_back(NULL);
+        
+        vertices[0] = new CVertex(0, CPoint3D(p1, 6, 0),     0.0, 0.0);
+        vertices[1] = new CVertex(1, CPoint3D(p2, 6, 0),     0.0, 1.0);
+        
     }
 };
 
