@@ -386,15 +386,16 @@ static const float rot_factor = 0.25;
 
 - (void)calc_frame:(NSTimer *)pTimer
 {
-    //static long test_counter = 0;
-    //cout << "calc_frame : " << test_counter++ << endl;
+    static long test_counter = 0;
+    cout << "calc_frame : " << test_counter++ << "  " << pTimer << endl;
     
     //** FAIRE LE DESSIN ICI.
     //Set modelview matrix before render. keep base modelview to reinit it each time
     //TODO on peut seter rotx, roty, rotz pour la rotation de la modelview, 
     //mais on ne peut que seter camposz pour translater en z, mais pas en x et y ?
     // rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
-
+    
+    [renderer set_time:[0 floatValue]];
     
     [self setNeedsDisplay:YES];
 }
@@ -409,10 +410,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     renderer->rotx = rx; renderer->roty = ry; renderer->rotz = rz;
     renderer->camposx = cx; renderer->camposy = cy; renderer->camposz = cz;
 }
-/*- (void) setModelviewAttr:(GLfloat)rx:ry(GLfloat)ry:rz(GLfloat)rz:cx(GLfloat)cx:cy(GLfloat)cy:cz(GLfloat)cz {
-    renderer->rotx = rx; renderer->roty = ry; renderer->rotz = rz;
-    renderer->camposx = cx; renderer->camposy = cy; renderer->camposz = cz;
-}*/
+
 
 - (void) draw_view
 {
@@ -444,13 +442,10 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
 
-    //renderer->rotx = 0.0;
-    //renderer->roty = 0.0;
-    //renderer->rotz = 0.0;
 
     //AL 2nd Shader
-    //[renderer renderWave:drap];
-    [renderer render:drap];
+    [renderer renderWave:drap];
+    //[renderer render:drap];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
