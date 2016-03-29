@@ -390,7 +390,7 @@ void CMesh::DrawLine(GLint prog)
     
     unsigned int indices[] = {0, 1};
     
-    glDrawElements(GL_LINE, 2, GL_UNSIGNED_INT, indices);
+    glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, indices);
     
     glDisableVertexAttribArray(attrib_position);
     glDisableVertexAttribArray(attrib_texcoord);
