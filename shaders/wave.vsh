@@ -32,11 +32,11 @@ void main (void)
     
     vec4 newPos = pos + vec4(0,
                              0,
-                             amplitude * sin((2*pi*frequence*texcoord.y) + (vitesse*time)),
+                             exp(-0.01/texcoord.y) * amplitude * sin((2*pi*frequence*texcoord.y + 1) + (vitesse*time)),
                              0);
     
     newPos +=           vec4(0,
-                             0.2 * amplitude * sin((2*pi*frequence*texcoord.y * (texcoord.x-1)) + (vitesse*time)),
+                             exp(-0.01/texcoord.y) * 0.2 * amplitude * sin((2*pi*frequence*texcoord.y * (texcoord.x-1)) + (vitesse*time)),
                              0,
                              0);
     
