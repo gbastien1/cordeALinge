@@ -12,6 +12,12 @@
 
 using namespace std;
 
+//inline lerp method
+inline float lerpf(float a, float b, float t)
+{
+    return a + (b - a) * t;
+}
+
 static
 NSArray* open_files(NSArray* filetype_ext)
 {
@@ -35,9 +41,15 @@ NSArray* open_files(NSArray* filetype_ext)
     return nil;
 }
 
-static long angle = 0;
-static long compteur = 0;
+// Variables par rapport a l'angle
+static float angle = 0;
+static float curAnimTime = 0;
 static bool simulating = false;
+static bool goingUp = true;
+const float targetAngle = 45;
+const float animTime = 5;
+
+
 
 @interface CGLView (PrivateMethods)
 - (void) init_gl;
@@ -337,8 +349,9 @@ NSString* choose_image_file()
    
     //** TODO: Réinitialiser la simulation.
     angle = 0;
-    compteur = 0;
+    curAnimTime = 0;
     simulating = true;
+    goingUp = true;
     
 }
 
@@ -402,9 +415,11 @@ static const float rot_factor = 0.25;
     float realTime = test_counter / 60.0;
     [renderer set_time:realTime];
     
+    curAnimTime = realTime;
+    
     [self setNeedsDisplay:YES];
     
-    //cout << "calc_frame : " << test_counter << "  " << realTime << endl;
+    cout << "calc_frame : " << curAnimTime << "  " << realTime << endl;
 }
 
 
@@ -452,7 +467,6 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 
 
     //AL 2nd Shader
-    renderer->rotx = rx + angle;
     renderer->camposx = -2.0;
     renderer->camposy = 6.0;
     [renderer renderWave:drap];
@@ -460,31 +474,36 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
-    //TODO : MEttre dans une fonction
+    //TODO : Mettre dans une fonction
     if(simulating) {
-        compteur++;
-    
-        if(compteur >= 300)
-        {
-            angle--;
         
-            if(angle <= 0)
+        if(!goingUp)
+        {
+            cout << "calc_frame 56356356435345435ergrt45 "<< endl;
+            angle = lerpf(angle, 0, 0.01);
+            
+        
+            if(fabsf(angle) < 0.25)
             {
-                compteur = 0;
+                curAnimTime = 0;
                 angle = 0;
-                simulating = 0;
+                simulating = false;
+                goingUp = true;
             }
         }
         else
         {
-            angle++;
+            cout << "cur" << curAnimTime << "   " << animTime << endl;
+
+            angle = lerpf(angle, targetAngle, 0.035);
         
-            if(angle > 45)
+            if(curAnimTime >= animTime)
             {
-                angle = 45;
+                goingUp = false;
             }
         }
     }
+    [renderer set_angle:angle];
 
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);

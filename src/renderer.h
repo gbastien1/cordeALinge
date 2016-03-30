@@ -31,6 +31,7 @@ class CSkyBox;
 -(void) set_ambiant_contrib:(float)val;
 -(void) set_spec_contrib:(float)val;
 -(void) set_mat_shininess:(float)val;
--(void)set_time:(float)val;
+-(void) set_time:(float)val;
+-(void) set_angle:(float)val;
 
 @end

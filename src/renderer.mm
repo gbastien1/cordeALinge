@@ -364,6 +364,17 @@ GLuint view_height;
 
 }
 
+//AL Method to set time in wave vertex shader
+-(void)set_angle:(float)val
+{
+    glUseProgram(shader_wave_prog_name);
+    GLuint loc = glGetUniformLocation(shader_wave_prog_name, "angle");
+    glUniform1f(loc, val);
+    
+    
+}
+
+
 - (void)render:(CMesh*)mesh
 {
     GLfloat viewdir_matrix[16];        // Matrice sans la translation (pour le cube map et le skybox).
