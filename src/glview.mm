@@ -35,6 +35,9 @@ NSArray* open_files(NSArray* filetype_ext)
     return nil;
 }
 
+static long angle = 0;
+static long compteur = 0;
+static bool simulating = false;
 
 @interface CGLView (PrivateMethods)
 - (void) init_gl;
@@ -333,6 +336,10 @@ NSString* choose_image_file()
     [[NSRunLoop currentRunLoop]addTimer:frame_timer forMode: NSDefaultRunLoopMode];
    
     //** TODO: Réinitialiser la simulation.
+    angle = 0;
+    compteur = 0;
+    simulating = true;
+    
 }
 
 -(IBAction)bt_stop_pressed:(NSButton*)sender
@@ -342,6 +349,8 @@ NSString* choose_image_file()
         [frame_timer invalidate];
         frame_timer = 0;
     }
+    
+    simulating = false;
 }
 
 
@@ -391,7 +400,6 @@ static const float rot_factor = 0.25;
     
     // AL Get real time based on test_counter and interval
     float realTime = test_counter / 60.0;
-    
     [renderer set_time:realTime];
     
     [self setNeedsDisplay:YES];
@@ -415,6 +423,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int baseCamZ = -10;
+
     
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
@@ -443,10 +452,40 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 
 
     //AL 2nd Shader
+    renderer->rotx = rx + angle;
+    renderer->camposx = -2.0;
+    renderer->camposy = 6.0;
     [renderer renderWave:drap];
     //[renderer render:drap];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
+    
+    //TODO : MEttre dans une fonction
+    if(simulating) {
+        compteur++;
+    
+        if(compteur >= 300)
+        {
+            angle--;
+        
+            if(angle <= 0)
+            {
+                compteur = 0;
+                angle = 0;
+                simulating = 0;
+            }
+        }
+        else
+        {
+            angle++;
+        
+            if(angle > 45)
+            {
+                angle = 45;
+            }
+        }
+    }
+
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
