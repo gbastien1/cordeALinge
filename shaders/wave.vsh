@@ -8,6 +8,7 @@ uniform vec3 light_pos;
 uniform vec3 cam_pos;
 
 uniform float time;
+uniform float angle;
 
 uniform float amplitude = 0.8;
 uniform float frequence = 2;
@@ -42,18 +43,27 @@ vec3 sigma(float x, float y) {
 void main (void)
 {
     var_texcoord = texcoord;
-    
+
     float x = texcoord.x;
     float y = texcoord.y;
     
+    // Main ondulation
     vec4 newPos = pos + vec4(0,
                              0,
                              exp(-0.5/y) * amplitude * sin((2*pi*frequence*y + 1) + (vitesse*time)),
                              0);
-    
+    // Second ondulation
     newPos +=           vec4(0,
                              exp(-0.5/y) * 0.25 * amplitude * sin((2*pi*frequence*y * (x-1)) + (vitesse*time)),
                              0,
+                             0);
+    // Additionnal harmonics
+    //TODO :
+    
+    //Change Angle
+    newPos +=           vec4(0,
+                             y * angle * 0.012,
+                             y * angle * 0.075,
                              0);
     
 
