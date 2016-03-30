@@ -25,25 +25,46 @@ out vec3 V;
 out vec3 var_light_pos;
 
 const float pi = 3.14159265359;
+const float h = 0.000000001;
+
+float f(float x, float y) {
+    return  -1;/*length(vec3(0,
+                 exp(-0.5 / y) * 0.25 * amplitude * sin((2 * pi * frequence * y * (x-1)) + (vitesse * time)),
+                 exp(-0.5 / y) * amplitude * sin((2 * pi * frequence * y + 1) + (vitesse * time))));*/
+    
+}
+
+vec3 sigma(float x, float y) {
+    return vec3(x, y, f(x, y));
+}
+
 
 void main (void)
 {
     var_texcoord = texcoord;
     
+    float x = texcoord.x;
+    float y = texcoord.y;
+    
     vec4 newPos = pos + vec4(0,
                              0,
-                             exp(-0.5/texcoord.y) * amplitude * sin((2*pi*frequence*texcoord.y + 1) + (vitesse*time)),
+                             exp(-0.5/y) * amplitude * sin((2*pi*frequence*y + 1) + (vitesse*time)),
                              0);
     
     newPos +=           vec4(0,
-                             exp(-0.5/texcoord.y) * 0.25 * amplitude * sin((2*pi*frequence*texcoord.y * (texcoord.x-1)) + (vitesse*time)),
+                             exp(-0.5/y) * 0.25 * amplitude * sin((2*pi*frequence*y * (x-1)) + (vitesse*time)),
                              0,
                              0);
     
 
+    //N = normalize(normal_matrix * N0);
     
+    //calcul de normales
+    vec3 dx = (sigma(x + h, y) - sigma(x, y)) / h;
+    vec3 dy = (sigma(x, y + h) - sigma(x, y)) / h;
     
-    N = normalize(normal_matrix*N0);
+    N = normalize(cross(dx, dy));
+    
     V = normalize(vec3(modelview_matrix*newPos));
     var_light_pos = normal_matrix*light_pos;
     
