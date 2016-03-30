@@ -415,11 +415,11 @@ static const float rot_factor = 0.25;
     float realTime = test_counter / 60.0;
     [renderer set_time:realTime];
     
-    curAnimTime = realTime;
+    curAnimTime += 1 / 60.0;
     
     [self setNeedsDisplay:YES];
     
-    cout << "calc_frame : " << curAnimTime << "  " << realTime << endl;
+    //cout << "calc_frame : " << curAnimTime << "  " << realTime << endl;
 }
 
 
@@ -479,7 +479,6 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         
         if(!goingUp)
         {
-            cout << "calc_frame 56356356435345435ergrt45 "<< endl;
             angle = lerpf(angle, 0, 0.01);
             
         
@@ -493,9 +492,9 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         }
         else
         {
-            cout << "cur" << curAnimTime << "   " << animTime << endl;
+            //cout << "cur" << curAnimTime << "   " << animTime << endl;
 
-            angle = lerpf(angle, targetAngle, 0.035);
+            angle = lerpf(angle, targetAngle, 0.04);
         
             if(curAnimTime >= animTime)
             {
