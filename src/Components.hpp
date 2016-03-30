@@ -100,9 +100,16 @@ public:
             vertices.push_back(new CVertex(i+2, CPoint3D(radius*cos(theta*i), 0, radius*sin(theta*i)), u, v));
         }
         
+        CTriangle* tri;
         //define triangles for top circle
         for (int i = 1; i <= slices; i++) {
-            CTriangle* tri(new CTriangle(vertices[0], vertices[i], vertices[i+1]));
+            CVertex * v1 = vertices[0];
+            CVertex * v2 = vertices[i+1];
+            CVertex * v3 = vertices[i];
+            if (i == slices)
+                v2 = vertices[1];
+            
+            tri = new CTriangle(v1, v2, v3);
             triangles.push_back(tri);
             
             //adjacent triangles
@@ -112,34 +119,53 @@ public:
         }
         
         //define triangles for bottom circle
-        for (int i = slices; i < slices*2; i++) {
-            CTriangle* tri(new CTriangle(vertices[slices], vertices[i+1], vertices[i+2]));
+        for (int i = slices+1; i <= slices*2; i++) {
+            CVertex * v1 = vertices[slices+1];
+            CVertex * v2;
+            if (i < slices * 2)
+                v2 = vertices[i+2];
+            else if (i == slices*2)
+                CVertex * v2 = vertices[slices+2];
+            CVertex * v3 = vertices[i+1];
+            
+            tri = new CTriangle(v1, v2, v3);
             triangles.push_back(tri);
             
             //adjacent triangles
             vertices[slices]->triangles.push_back(tri);
             vertices[i+1]->triangles.push_back(tri);
-            vertices[i+2]->triangles.push_back(tri);
+            if (i < slices*2)
+                vertices[i+2]->triangles.push_back(tri);
+            else if (i == slices*2)
+                vertices[slices+2]->triangles.push_back(tri);
         }
         
         //define triangles for sides
         for (int i = 0; i < slices; i++) { //2 triangles per side
-            
-                CTriangle* tri1(new CTriangle(vertices[i+1], vertices[i+2], vertices[i + slices + 1]));
-                triangles.push_back(tri1);
+            CTriangle* tri1;
+            if (i < slices-1)
+                tri1 = new CTriangle(vertices[i+1], vertices[i+2], vertices[i + slices + 2]);
+            else if (i == slices-1)
+                tri1 = new CTriangle(vertices[i+1], vertices[1], vertices[i + slices + 2]);
                 
-                //adjacent triangles
-                vertices[i+1]->triangles.push_back(tri1);
-                vertices[i+2]->triangles.push_back(tri1);
-                vertices[i+slices+1]->triangles.push_back(tri1);
+            triangles.push_back(tri1);
             
-                CTriangle* tri2(new CTriangle(vertices[i+2], vertices[i + slices + 2], vertices[i + slices + 1]));
-                triangles.push_back(tri2);
-                
-                //adjacent triangles
-                vertices[i+2]->triangles.push_back(tri2);
-                vertices[i+slices+2]->triangles.push_back(tri2);
-                vertices[i+slices+1]->triangles.push_back(tri2);
+            //adjacent triangles
+            vertices[i+1]->triangles.push_back(tri1);
+            vertices[i+2]->triangles.push_back(tri1);
+            vertices[i+slices+1]->triangles.push_back(tri1);
+        
+            CTriangle* tri2;
+            if (i < slices-1)
+                tri2 = new CTriangle(vertices[i+2], vertices[i + slices + 3], vertices[i + slices + 2]);
+            else if (i == slices-1)
+                tri2 = new CTriangle(vertices[1], vertices[slices + 2], vertices[i + slices + 2]);
+            triangles.push_back(tri2);
+            
+            //adjacent triangles
+            vertices[i+2]->triangles.push_back(tri2);
+            vertices[i+slices+2]->triangles.push_back(tri2);
+            vertices[i+slices+1]->triangles.push_back(tri2);
         }
         
 

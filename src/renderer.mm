@@ -354,11 +354,14 @@ GLuint view_height;
     glUniform1f(loc, val);
 }
 
+//AL Method to set time in wave vertex shader
 -(void)set_time:(float)val
 {
     glUseProgram(shader_wave_prog_name);
     GLuint loc = glGetUniformLocation(shader_wave_prog_name, "time");
     glUniform1f(loc, val);
+    
+
 }
 
 - (void)render:(CMesh*)mesh
