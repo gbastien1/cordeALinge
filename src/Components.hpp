@@ -154,8 +154,6 @@ public:
 class Drap : public CMesh {
 public:
     Drap() {
-        
-        
         for (int i = 0; i < 1200; i++) {
             vertices.push_back(NULL);
         }
@@ -165,7 +163,7 @@ public:
         {
             for(float j = 0; j < 40; j++)
             {
-                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + (j/10), 6 - (i/10), 0), (j / 40), ((i / 30)));
+                vertices[compteurVertice] = new CVertex(compteurVertice, CPoint3D(-2 + (j/10), 0 - (i/10), 0), (j / 40), ((i / 30)));
                 
                 compteurVertice++;
                 

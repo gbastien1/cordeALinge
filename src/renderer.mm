@@ -474,11 +474,26 @@ GLuint view_height;
     
     float startCamPosZ = -5.0;
     mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
-    mtxLoadTranslate(model_view_matrix, 0, -5.0, startCamPosZ); //GB added camposx and camposy instead of 0 and 0.0
+    
+    
+    /*mtxLoadIdentity(viewdir_matrix);
+    cout << "rotx : " << rotx << endl;
+    mtxRotateXApply(viewdir_matrix, rotx);
+    mtxRotateYApply(viewdir_matrix, roty);
+    mtxRotateZApply(viewdir_matrix, rotz);
+    
     mtxRotateXApply(model_view_matrix, rotx);
     mtxRotateYApply(model_view_matrix, roty);
     mtxRotateZApply(model_view_matrix, rotz);
+    mtxLoadTranslate(model_view_matrix, 0, -4.0, startCamPosZ); //GB added camposx and camposy instead of 0 and 0.0
+    mtxTranslateApply(model_view_matrix, camposx, camposy, camposz);*/
+    
+    
+    mtxLoadTranslate(model_view_matrix, 0, 1, startCamPosZ); //GB added camposx and camposy instead of 0 and 0.0
     mtxTranslateApply(model_view_matrix, camposx, camposy, camposz);
+    mtxRotateXApply(model_view_matrix, rotx);
+    mtxRotateYApply(model_view_matrix, roty);
+    mtxRotateZApply(model_view_matrix, rotz);
     
     mtxLoadIdentity(viewdir_matrix);
     mtxRotateXApply(viewdir_matrix, rotx);
@@ -511,6 +526,12 @@ GLuint view_height;
         
         mesh->Draw(shader_wave_prog_name);
     }
+}
+
+- (void)renderAddAngle:(CMesh*)mesh
+{
+    cout << "Bonjour" << endl;
+    rotx++;
 }
 
 

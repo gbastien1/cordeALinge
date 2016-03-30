@@ -136,7 +136,6 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     plane->AllocVBOData();
     
     //creer poteau1
-    cout << "creation of post1" << endl;
     post1 = new Cylinder(6,0.2,6);
     post1->UpdateNormals();
     post1->AllocVBOData();
@@ -387,14 +386,14 @@ static const float rot_factor = 0.25;
 - (void)calc_frame:(NSTimer *)pTimer
 {
     static long test_counter = 0;
-    cout << "calc_frame : " << test_counter++ << "  " << pTimer << endl;
+    
     
     //** FAIRE LE DESSIN ICI.
     //Set modelview matrix before render. keep base modelview to reinit it each time
     //TODO on peut seter rotx, roty, rotz pour la rotation de la modelview, 
     //mais on ne peut que seter camposz pour translater en z, mais pas en x et y ?
-    // rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
-    
+    //rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
+
     [renderer set_time:[0 floatValue]];
     
     [self setNeedsDisplay:YES];
@@ -414,6 +413,10 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 
 - (void) draw_view
 {
+    static long angle = 0;
+    static long compteur = 0;
+    cout << "angle : " << angle << endl;
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int baseCamZ = -10;
     
@@ -444,13 +447,41 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 
 
     //AL 2nd Shader
+    renderer->rotx = angle;
     [renderer renderWave:drap];
+    
+    setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     //[renderer render:drap];
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
+    
+    compteur++;
+    
+    if(compteur >= 300)
+    {
+        angle--;
+        
+        if(angle <= 0)
+        {
+            compteur = 0;
+            angle = 0;
+            [frame_timer invalidate];
+            frame_timer = 0;
+        }
+    }
+    else
+    {
+        angle++;
+        
+        if(angle > 45)
+        {
+            angle = 45;
+        }
+    }
+    
 }
 
 - (void) dealloc
