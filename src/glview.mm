@@ -387,17 +387,16 @@ static const float rot_factor = 0.25;
 - (void)calc_frame:(NSTimer *)pTimer
 {
     static long test_counter = 0;
-    cout << "calc_frame : " << test_counter++ << "  " << pTimer << endl;
+    test_counter++;
     
-    //** FAIRE LE DESSIN ICI.
-    //Set modelview matrix before render. keep base modelview to reinit it each time
-    //TODO on peut seter rotx, roty, rotz pour la rotation de la modelview, 
-    //mais on ne peut que seter camposz pour translater en z, mais pas en x et y ?
-    // rotx = 0.0, roty = 0.0, rotz = 0.0, camposx = 0.0, camposy = 0.0, camposz = -10.0;
+    // AL Get real time based on test_counter and interval
+    float realTime = test_counter / 60.0;
     
-    [renderer set_time:[0 floatValue]];
+    [renderer set_time:realTime];
     
     [self setNeedsDisplay:YES];
+    
+    //cout << "calc_frame : " << test_counter << "  " << realTime << endl;
 }
 
 
