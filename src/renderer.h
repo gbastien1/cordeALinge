@@ -33,5 +33,8 @@ class CSkyBox;
 -(void) set_mat_shininess:(float)val;
 -(void) set_time:(float)val;
 -(void) set_angle:(float)val;
+-(void) set_amplitude:(float)val;
+-(void) set_frequence:(float)val;
+-(void) set_vitesse:(float)val;
 
 @end

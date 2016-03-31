@@ -374,6 +374,34 @@ GLuint view_height;
     
 }
 
+//AL Method to set amplitude in wave vertex shader
+-(void)set_amplitude:(float)val
+{
+    glUseProgram(shader_wave_prog_name);
+    GLuint loc = glGetUniformLocation(shader_wave_prog_name, "amplitude");
+    glUniform1f(loc, val);
+    
+    
+}
+//AL Method to set frequence in wave vertex shader
+-(void)set_frequence:(float)val
+{
+    glUseProgram(shader_wave_prog_name);
+    GLuint loc = glGetUniformLocation(shader_wave_prog_name, "frequence");
+    glUniform1f(loc, val);
+    
+    
+}
+//AL Method to set speed in wave vertex shader
+-(void)set_vitesse:(float)val
+{
+    glUseProgram(shader_wave_prog_name);
+    GLuint loc = glGetUniformLocation(shader_wave_prog_name, "vitesse");
+    glUniform1f(loc, val);
+    
+    
+}
+
 
 - (void)render:(CMesh*)mesh
 {

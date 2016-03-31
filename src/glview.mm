@@ -43,10 +43,18 @@ NSArray* open_files(NSArray* filetype_ext)
 
 // Variables par rapport a l'angle
 static float angle = 0;
+static float amplitude = 0;
+static float frequence = 0;
+static float vitesse = 0;
 static float curAnimTime = 0;
 static bool simulating = false;
 static bool goingUp = true;
+
+
 const float targetAngle = 45;
+const float targetAmplitude = 1;
+const float targetFrequence = 2;
+const float targetVitesse = 5;
 const float animTime = 5;
 
 
@@ -349,9 +357,13 @@ NSString* choose_image_file()
    
     //** TODO: Réinitialiser la simulation.
     angle = 0;
+    amplitude = 0;
+    frequence = 1;
+    vitesse = 2;
     curAnimTime = 0;
     simulating = true;
     goingUp = true;
+    
     
 }
 
@@ -364,6 +376,11 @@ NSString* choose_image_file()
     }
     
     simulating = false;
+    angle = 0;
+    amplitude = 0;
+    frequence = 1;
+    vitesse = 2;
+    curAnimTime = 0;
 }
 
 
@@ -479,13 +496,20 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         
         if(!goingUp)
         {
-            angle = lerpf(angle, 0, 0.01);
+            float step = 0.01;
+            angle = lerpf(angle, 0, step);
+            amplitude = lerpf(amplitude, 0, step);
+            frequence = lerpf(frequence, 1, step);
+            vitesse = lerpf(vitesse, 2, step);
             
         
             if(fabsf(angle) < 0.25)
             {
                 curAnimTime = 0;
                 angle = 0;
+                amplitude = 0;
+                frequence = 1;
+                vitesse = 2;
                 simulating = false;
                 goingUp = true;
             }
@@ -493,8 +517,11 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         else
         {
             //cout << "cur" << curAnimTime << "   " << animTime << endl;
-
-            angle = lerpf(angle, targetAngle, 0.04);
+            float step = 0.04;
+            angle = lerpf(angle, targetAngle, step);
+            amplitude = lerpf(amplitude, targetAmplitude, step);
+            frequence = lerpf(frequence, targetFrequence, step);
+            vitesse = lerpf(vitesse, targetVitesse, step);
         
             if(curAnimTime >= animTime)
             {
@@ -503,6 +530,11 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         }
     }
     [renderer set_angle:angle];
+    [renderer set_amplitude:amplitude];
+    [renderer set_frequence:frequence];
+    [renderer set_vitesse:vitesse];
+    
+    cout << "ang " << angle << "    amp " << amplitude << "    freq " << frequence << "    vit " << vitesse<< endl;
 
     
 	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
