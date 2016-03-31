@@ -26,12 +26,30 @@ out vec3 V;
 out vec3 var_light_pos;
 
 const float pi = 3.14159265359;
-const float h = 0.000000001;
+const float h = 0.5;
+
+float h1(float x, float y) {
+    return exp(-0.5/y) * amplitude * sin((2*pi*frequence*y + 1) + (vitesse*time));
+}
+
+float h2(float x, float y) {
+    return exp(-0.5/y) * 0.25 * amplitude * sin((2*pi*frequence*y * (x-1)) + (vitesse*time));
+}
+
+float angley(float x, float y) {
+    return y * angle * 0.012;
+}
+
+float anglez(float x, float y) {
+    return y * angle * 0.075;
+}
+
 
 float f(float x, float y) {
-    return  -1;/*length(vec3(0,
-                 exp(-0.5 / y) * 0.25 * amplitude * sin((2 * pi * frequence * y * (x-1)) + (vitesse * time)),
-                 exp(-0.5 / y) * amplitude * sin((2 * pi * frequence * y + 1) + (vitesse * time))));*/
+    return  length(vec3(pos.x, pos.y, pos.z) +
+                   vec3(0,
+                        h1(x, y),
+                        h2(x, y)));
     
 }
 
@@ -50,36 +68,29 @@ void main (void)
     // Main ondulation
     vec4 newPos = pos + vec4(0,
                              0,
-                             exp(-0.5/y) * amplitude * sin((2*pi*frequence*y + 1) + (vitesse*time)),
+                             h1(x, y),
                              0);
     // Second ondulation
     newPos +=           vec4(0,
-                             exp(-0.5/y) * 0.25 * amplitude * sin((2*pi*frequence*y * (x-1)) + (vitesse*time)),
+                             h2(x, y),
                              0,
                              0);
-    // Additionnal harmonics
-    //TODO :
     
     //Change Angle
     newPos +=           vec4(0,
-                             y * angle * 0.012,
-                             y * angle * 0.075,
+                             angley(x, y),
+                             anglez(x, y),
                              0);
     
-
-    //N = normalize(normal_matrix * N0);
     
     //calcul de normales
     vec3 dx = (sigma(x + h, y) - sigma(x, y)) / h;
     vec3 dy = (sigma(x, y + h) - sigma(x, y)) / h;
-    
     N = normalize(cross(dx, dy));
     
     V = normalize(vec3(modelview_matrix*newPos));
     var_light_pos = normal_matrix*light_pos;
-    
- 
-    
+   
     
 	gl_Position	= modelview_proj_matrix*newPos;
 }
