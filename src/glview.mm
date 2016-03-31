@@ -12,7 +12,7 @@
 
 using namespace std;
 
-//inline lerp method
+//AL inline lerp method used for the animation
 inline float lerpf(float a, float b, float t)
 {
     return a + (b - a) * t;
@@ -41,7 +41,7 @@ NSArray* open_files(NSArray* filetype_ext)
     return nil;
 }
 
-// Variables par rapport a l'angle
+// AL Variables used for the animation in the wave shader. Kind of ugly but this is a prototype.
 static float angle = 0;
 static float amplitude = 0;
 static float frequence = 0;
@@ -49,7 +49,6 @@ static float vitesse = 0;
 static float curAnimTime = 0;
 static bool simulating = false;
 static bool goingUp = true;
-
 
 const float targetAngle = 45;
 const float targetAmplitude = 1;
@@ -161,7 +160,6 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     plane->AllocVBOData();
     
     //creer poteau1
-    cout << "creation of post1" << endl;
     post1 = new Cylinder(6,0.2,6);
     post1->UpdateNormals();
     post1->AllocVBOData();
@@ -357,7 +355,7 @@ NSString* choose_image_file()
                                        selector:@selector(calc_frame:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop]addTimer:frame_timer forMode: NSDefaultRunLoopMode];
    
-    //** TODO: Réinitialiser la simulation.
+    //AL Restart animation values when stop is pressed
     angle = 0;
     amplitude = 0;
     frequence = startFrequence;
@@ -377,6 +375,7 @@ NSString* choose_image_file()
         frame_timer = 0;
     }
     
+    //AL Reset animation values when stop is pressed
     simulating = false;
     angle = 0;
     amplitude = 0;
@@ -433,12 +432,11 @@ static const float rot_factor = 0.25;
     // AL Get real time based on test_counter and interval
     float realTime = test_counter / 60.0;
     [renderer set_time:realTime];
-    
+    //AL Calculate current anim Time
     curAnimTime += 1 / 60.0;
     
     [self setNeedsDisplay:YES];
-    
-    //cout << "calc_frame : " << curAnimTime << "  " << realTime << endl;
+
 }
 
 
@@ -456,44 +454,54 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 - (void) draw_view
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    int baseCamZ = -10;
-
+    int baseCamZ = -10; //base Z position on the camera
     
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
-    //[renderer render:mesh];
+    
     GLfloat rx, ry, rz, cx, cy, cz;
     rx = renderer->rotx; ry = renderer->roty; rz = renderer->rotz;
     cx = renderer->camposx; cy = renderer->camposy; cz = renderer->camposz;
 
-    //cout << "render post1 in calc frame\n";
+    
+    
+    //Render the floor plane
     renderer->camposx = -4.0;
     renderer->camposz = -4.0 + baseCamZ;
-    [renderer render:plane];
+    [renderer render:plane:0];  //Render using GL.TRIANGLES
     
+    //Render first post
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     renderer->camposx = -3.0;
-    [renderer render:post1];
+    [renderer render:post1:0];  //Render using GL.TRIANGLES
     
+    //Render second post
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     renderer->camposx = 3.0;
-    [renderer render:post2];
+    [renderer render:post2:0];  //Render using GL.TRIANGLES
     
+    //Render Line between the two post
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
-    [renderer renderLine:line];
+    [renderer render:line:1];   //Render using GL.LINES
     
+    //Render Sheet at correct position with wave shader
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
-
-
-    //AL 2nd Shader
     renderer->camposx = -2.0;
     renderer->camposy = 6.0;
-    [renderer renderWave:drap];
-    //[renderer render:drap];
+    [renderer render:drap:2];   //Render using wave shader
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
-    //TODO : Mettre dans une fonction
+    //Handle Shader animation
+    [self Handle_animation];
+
+    
+	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
+	CGLUnlockContext([[self openGLContext] CGLContextObj]);
+}
+
+//AL Handle the animation of the wave shader properties
+-(void)Handle_animation{
     if(simulating) {
         
         if(!goingUp)
@@ -504,7 +512,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
             frequence = lerpf(frequence, startFrequence, step);
             vitesse = lerpf(vitesse, startVitesse, step);
             
-        
+            
             if(fabsf(angle) < 0.25)
             {
                 curAnimTime = 0;
@@ -518,30 +526,27 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         }
         else
         {
-            //cout << "cur" << curAnimTime << "   " << animTime << endl;
             float step = 0.04;
             angle = lerpf(angle, targetAngle, step);
             amplitude = lerpf(amplitude, targetAmplitude, step);
             frequence = lerpf(frequence, targetFrequence, step);
             vitesse = lerpf(vitesse, targetVitesse, step);
-        
+            
             if(curAnimTime >= animTime)
             {
                 goingUp = false;
             }
         }
     }
+    //Send angle, amplitude, frequence and vitesse in uniform values in shader
     [renderer set_angle:angle];
     [renderer set_amplitude:amplitude];
     [renderer set_frequence:frequence];
     [renderer set_vitesse:vitesse];
     
-    cout << "ang " << angle << "    amp " << amplitude << "    freq " << frequence << "    vit " << vitesse<< endl;
-
     
-	CGLFlushDrawable([[self openGLContext] CGLContextObj]);
-	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
+
 
 - (void) dealloc
 {

@@ -41,5 +41,8 @@ class CMesh;
 // Lecture d'un fichier en format ply.
 -(void)load_mesh:(const char*)fply;
 
+//AL Handle the animation of the wave shader properties (Vitesse, Amplitude, frequence, angle)
+-(void)Handle_animation;
+
 
 @end
