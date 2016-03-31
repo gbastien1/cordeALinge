@@ -151,8 +151,8 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     NSString* file_path_name = nil;
     
     //DRAGON
-    //file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
-    //[self load_mesh:[file_path_name cStringUsingEncoding:NSUTF8StringEncoding]];
+    file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
+    [self load_mesh:[file_path_name cStringUsingEncoding:NSUTF8StringEncoding]];
     
     // plane
     plane = new Rectangle(8, 8);
@@ -436,8 +436,7 @@ static const float rot_factor = 0.25;
     curAnimTime += 1 / 60.0;
     
     [self setNeedsDisplay:YES];
-    
-    //cout << "calc_frame : " << curAnimTime << "  " << realTime << endl;
+
 }
 
 
@@ -456,7 +455,6 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     int baseCamZ = -10; //base Z position on the camera
-
     
 	[[self openGLContext] makeCurrentContext];
 	CGLLockContext([[self openGLContext] CGLContextObj]);
@@ -465,30 +463,32 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     rx = renderer->rotx; ry = renderer->roty; rz = renderer->rotz;
     cx = renderer->camposx; cy = renderer->camposy; cz = renderer->camposz;
 
+    
+    
     //Render the floor plane
     renderer->camposx = -4.0;
     renderer->camposz = -4.0 + baseCamZ;
-    [renderer render:plane:0];
+    [renderer render:plane:0];  //Render using GL.TRIANGLES
     
     //Render first post
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     renderer->camposx = -3.0;
-    [renderer render:post1:0];
+    [renderer render:post1:0];  //Render using GL.TRIANGLES
     
     //Render second post
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     renderer->camposx = 3.0;
-    [renderer render:post2:0];
+    [renderer render:post2:0];  //Render using GL.TRIANGLES
     
     //Render Line between the two post
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
-    [renderer render:line:1];
+    [renderer render:line:1];   //Render using GL.LINES
     
-    //Render drap at correct position with wave shader
+    //Render Sheet at correct position with wave shader
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     renderer->camposx = -2.0;
     renderer->camposy = 6.0;
-    [renderer render:drap:2];
+    [renderer render:drap:2];   //Render using wave shader
     
     setModelviewAttr(renderer, rx, ry, rz, cx, cy, cz);
     
@@ -526,7 +526,6 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
         }
         else
         {
-            //cout << "cur" << curAnimTime << "   " << animTime << endl;
             float step = 0.04;
             angle = lerpf(angle, targetAngle, step);
             amplitude = lerpf(amplitude, targetAmplitude, step);
@@ -539,12 +538,12 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
             }
         }
     }
+    //Send angle, amplitude, frequence and vitesse in uniform values in shader
     [renderer set_angle:angle];
     [renderer set_amplitude:amplitude];
     [renderer set_frequence:frequence];
     [renderer set_vitesse:vitesse];
     
-    //cout << "ang " << angle << "    amp " << amplitude << "    freq " << frequence << "    vit " << vitesse<< endl;
     
 }
 
