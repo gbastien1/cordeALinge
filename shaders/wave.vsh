@@ -65,7 +65,7 @@ float h5(float x, float y) {
 vec4 getHarmonics(float x, float y) {
     return vec4(0,
                 h1Direction.x * h1(x, y) + h2Direction.x * h2(x, y) + h3Direction.x * h3(x,y) + h4Direction.x * h4(x,y) + h5Direction.x * h5(x,y),
-                h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y)),
+                h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y),
                 0);
 }
 

@@ -112,7 +112,7 @@ public:
             if (i < slices * 2)
                 v2 = vertices[i+2];
             else if (i == slices*2)
-                CVertex * v2 = vertices[slices+2];
+                v2 = vertices[slices+2];
             CVertex * v3 = vertices[i+1];
             
             tri = new CTriangle(v1, v2, v3);
