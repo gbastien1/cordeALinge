@@ -55,6 +55,8 @@ const float targetAngle = 45;
 const float targetAmplitude = 1;
 const float targetFrequence = 2;
 const float targetVitesse = 5;
+const float startVitesse = 5;
+const float startFrequence = 1.5;
 const float animTime = 5;
 
 
@@ -358,8 +360,8 @@ NSString* choose_image_file()
     //** TODO: Réinitialiser la simulation.
     angle = 0;
     amplitude = 0;
-    frequence = 1;
-    vitesse = 2;
+    frequence = startFrequence;
+    vitesse = startVitesse;
     curAnimTime = 0;
     simulating = true;
     goingUp = true;
@@ -378,8 +380,8 @@ NSString* choose_image_file()
     simulating = false;
     angle = 0;
     amplitude = 0;
-    frequence = 1;
-    vitesse = 2;
+    frequence = startFrequence;
+    vitesse = startVitesse;
     curAnimTime = 0;
 }
 
@@ -499,8 +501,8 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
             float step = 0.01;
             angle = lerpf(angle, 0, step);
             amplitude = lerpf(amplitude, 0, step);
-            frequence = lerpf(frequence, 1, step);
-            vitesse = lerpf(vitesse, 2, step);
+            frequence = lerpf(frequence, startFrequence, step);
+            vitesse = lerpf(vitesse, startVitesse, step);
             
         
             if(fabsf(angle) < 0.25)
@@ -508,8 +510,8 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
                 curAnimTime = 0;
                 angle = 0;
                 amplitude = 0;
-                frequence = 1;
-                vitesse = 2;
+                frequence = startFrequence;
+                vitesse = startVitesse;
                 simulating = false;
                 goingUp = true;
             }

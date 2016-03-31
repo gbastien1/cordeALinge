@@ -28,13 +28,34 @@ out vec3 var_light_pos;
 const float pi = 3.14159265359;
 const float h = 0.5;
 
+const vec2 h1Direction = vec2(0.2,0.8);
+const vec2 h2Direction = vec2(0.5,0.2);
+const vec2 h3Direction = vec2(0.65,0.1);
+const vec2 h4Direction = vec2(0.5,0.5);
+const vec2 h5Direction = vec2(1,0.1);
+
 float h1(float x, float y) {
     return exp(-0.5/y) * amplitude * sin((2*pi*frequence*y + 1) + (vitesse*time));
 }
 
 float h2(float x, float y) {
-    return exp(-0.5/y) * 0.25 * amplitude * sin((2*pi*frequence*y * (x-1)) + (vitesse*time));
+    return exp(-0.5/y) * 0.35 * amplitude * sin((2*pi*frequence*y * 1.1 * (x-1)) + (vitesse*time*1));
 }
+
+float h3(float x, float y) {
+    return exp(-0.5/y) * 0.25 * amplitude * sin((2*pi*frequence*y * 0.5 * (x-1) ) + (vitesse*time*1));
+}
+
+float h4(float x, float y) {
+    return exp(-0.5/y) * 0.1 * amplitude * sin((2*pi*frequence*y * 0.2 * (x-1) ) + (vitesse*time*1));
+}
+
+float h5(float x, float y) {
+    return exp(-0.5/y) * 0.5 * amplitude * sin((2*pi*frequence*y * 0.35 * (x-1) ) + (vitesse*time*1));
+}
+
+
+
 
 float angley(float x, float y) {
     return y * angle * 0.012;
@@ -48,8 +69,8 @@ float anglez(float x, float y) {
 float f(float x, float y) {
     return  length(vec3(pos.x, pos.y, pos.z) +
                    vec3(0,
-                        h1(x, y),
-                        h2(x, y)));
+                   h1Direction.x * h1(x, y) + h2Direction.x * h2(x, y) + h3Direction.x * h3(x,y) + h4Direction.x * h4(x,y) + h5Direction.x * h5(x,y),
+                   h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y)));
     
 }
 
@@ -67,14 +88,10 @@ void main (void)
     
     // Main ondulation
     vec4 newPos = pos + vec4(0,
-                             0,
-                             h1(x, y),
+                             h1Direction.x * h1(x, y) + h2Direction.x * h2(x, y) + h3Direction.x * h3(x,y) + h4Direction.x * h4(x,y) + h5Direction.x * h5(x,y),
+                             h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y),
                              0);
-    // Second ondulation
-    newPos +=           vec4(0,
-                             h2(x, y),
-                             0,
-                             0);
+
     
     //Change Angle
     newPos +=           vec4(0,
