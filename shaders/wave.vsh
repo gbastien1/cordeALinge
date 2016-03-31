@@ -7,9 +7,11 @@ uniform mat3 normal_matrix;
 uniform vec3 light_pos;
 uniform vec3 cam_pos;
 
+//AL received time and rotation angle from CPU
 uniform float time;
 uniform float angle;
 
+//AL harmonics default parameters
 uniform float amplitude = 0.8;
 uniform float frequence = 2;
 uniform float vitesse = 4;
@@ -28,12 +30,16 @@ out vec3 var_light_pos;
 const float pi = 3.14159265359;
 const float h = 0.5;
 
+//AL directional vectors of harmonics
 const vec2 h1Direction = vec2(0.2,0.8);
 const vec2 h2Direction = vec2(0.5,0.2);
 const vec2 h3Direction = vec2(0.65,0.1);
 const vec2 h4Direction = vec2(0.5,0.5);
 const vec2 h5Direction = vec2(1,0.1);
 
+/**
+ * AL Definition of harmonic functions
+ */
 float h1(float x, float y) {
     return exp(-0.5/y) * amplitude * sin((2*pi*frequence*y + 1) + (vitesse*time));
 }
@@ -55,25 +61,31 @@ float h5(float x, float y) {
 }
 
 
+//GB AL harmonics functions altogether
+vec4 getHarmonics(float x, float y) {
+    return vec4(0,
+                h1Direction.x * h1(x, y) + h2Direction.x * h2(x, y) + h3Direction.x * h3(x,y) + h4Direction.x * h4(x,y) + h5Direction.x * h5(x,y),
+                h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y)),
+                0);
+}
 
 
+// AL definition of sheet rotation functions
 float angley(float x, float y) {
     return y * angle * 0.012;
 }
-
 float anglez(float x, float y) {
     return y * angle * 0.075;
 }
 
 
+//GB harmonic function used to calculate partial derivatives of surface
 float f(float x, float y) {
-    return  length(vec3(pos.x, pos.y, pos.z) +
-                   vec3(0,
-                   h1Direction.x * h1(x, y) + h2Direction.x * h2(x, y) + h3Direction.x * h3(x,y) + h4Direction.x * h4(x,y) + h5Direction.x * h5(x,y),
-                   h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y)));
+    return  length(pos + getHarmonics(x, y));
     
 }
 
+//GB definition of general surface function
 vec3 sigma(float x, float y) {
     return vec3(x, y, f(x, y));
 }
@@ -87,20 +99,17 @@ void main (void)
     float y = texcoord.y;
     
     // Main ondulation
-    vec4 newPos = pos + vec4(0,
-                             h1Direction.x * h1(x, y) + h2Direction.x * h2(x, y) + h3Direction.x * h3(x,y) + h4Direction.x * h4(x,y) + h5Direction.x * h5(x,y),
-                             h1Direction.y * h1(x, y) + h2Direction.y * h2(x, y) + h3Direction.y * h3(x,y) + h4Direction.y * h4(x,y) + h5Direction.y * h5(x,y),
-                             0);
+    vec4 newPos = pos + getHarmonics(x, y);
 
     
-    //Change Angle
-    newPos +=           vec4(0,
-                             angley(x, y),
-                             anglez(x, y),
-                             0);
+    //Change angle
+    newPos += vec4(0,
+                   angley(x, y),
+                   anglez(x, y),
+                   0);
     
     
-    //calcul de normales
+    //derivatives used to calculate normals
     vec3 dx = (sigma(x + h, y) - sigma(x, y)) / h;
     vec3 dy = (sigma(x, y + h) - sigma(x, y)) / h;
     N = normalize(cross(dx, dy));
