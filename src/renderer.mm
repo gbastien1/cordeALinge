@@ -298,6 +298,7 @@ GLuint view_height;
     // PATCH: Effacer les ressources ogl ici.
 	//glDeleteTextures(1, &tex_name);
     glDeleteProgram(shader_prog_name);
+    //AL delete wave shader
     glDeleteProgram(shader_wave_prog_name);
 }
 
@@ -414,11 +415,11 @@ GLuint view_height;
     
     float startCamPosZ = -5.0;
     mtxLoadPerspective(projection_matrix, 50, (float)view_width/ (float)view_height, 1.0, 100.0);
-    mtxLoadTranslate(model_view_matrix, 0, -5.0, startCamPosZ); //GB added camposx and camposy instead of 0 and 0.0
+    mtxLoadTranslate(model_view_matrix, 0, -5.0, startCamPosZ);
     mtxRotateXApply(model_view_matrix, rotx);
     mtxRotateYApply(model_view_matrix, roty);
     mtxRotateZApply(model_view_matrix, rotz);
-    mtxTranslateApply(model_view_matrix, camposx, camposy, camposz);
+    mtxTranslateApply(model_view_matrix, camposx, camposy, camposz); //GB added camposx and camposy
     
     mtxLoadIdentity(viewdir_matrix);
     mtxRotateXApply(viewdir_matrix, rotx);
@@ -435,7 +436,7 @@ GLuint view_height;
     
     if ( mesh )
     {
-        if(type == 2) { // If type = 2. We render with wave shader
+        if(type == 2) { // AL If type = 2. We render with wave shader
             glUseProgram(shader_wave_prog_name);
             
             glUniformMatrix4fv(uniform_mvp_matrix_idx_wave, 1, GL_FALSE, mvp_matrix);
@@ -452,7 +453,7 @@ GLuint view_height;
             
             mesh->Draw(shader_wave_prog_name);
 
-        } else { // Else render with regular shader
+        } else { // AL Else render with regular shader
             
             glUseProgram(shader_prog_name);
         

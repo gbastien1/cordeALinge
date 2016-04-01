@@ -364,6 +364,8 @@ void CMesh::Draw(GLint prog)
     glDisableVertexAttribArray(attrib_normal);
 }
 
+
+//ABD function to draw GL_LINE instead of triangles
 void CMesh::DrawLine(GLint prog)
 {
     attrib_position = glGetAttribLocation(prog, "pos");

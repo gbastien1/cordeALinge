@@ -98,18 +98,18 @@ void main (void)
     float x = texcoord.x;
     float y = texcoord.y;
     
-    // Main ondulation
+    // AL Main ondulation
     vec4 newPos = pos + getHarmonics(x, y);
 
     
-    //Change angle
+    //AL Change angle
     newPos += vec4(0,
                    angley(x, y),
                    anglez(x, y),
                    0);
     
     
-    //derivatives used to calculate normals
+    //GB derivatives used to calculate normals
     vec3 dx = (sigma(x + h, y) - sigma(x, y)) / h;
     vec3 dy = (sigma(x, y + h) - sigma(x, y)) / h;
     N = normalize(cross(dx, dy));

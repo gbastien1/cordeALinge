@@ -17,7 +17,7 @@ class CMesh;
     
     float mouse_x0, mouse_y0;
     
-    CMesh       *mesh, *drap, *post1, *post2, *line, *plane;
+    CMesh       *mesh, *drap, *post1, *post2, *line, *plane; //GB added pointers to custom meshes
     CRenderer*  renderer;
     NSTimer*    frame_timer;
 }

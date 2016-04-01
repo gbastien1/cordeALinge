@@ -154,7 +154,7 @@ static CVReturn display_link_callback(CVDisplayLinkRef display_link,
     file_path_name = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"ply"];
     [self load_mesh:[file_path_name cStringUsingEncoding:NSUTF8StringEncoding]];
     
-    // plane
+    // GB plane
     plane = new Rectangle(8, 8);
     plane->UpdateNormals();
     plane->AllocVBOData();
@@ -464,7 +464,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
     cx = renderer->camposx; cy = renderer->camposy; cz = renderer->camposz;
 
     
-    
+    //AL ABD GB
     //Render the floor plane
     renderer->camposx = -4.0;
     renderer->camposz = -4.0 + baseCamZ;
@@ -500,7 +500,7 @@ void setModelviewAttr(CRenderer *renderer, GLfloat rx, GLfloat ry, GLfloat rz, G
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
-//AL Handle the animation of the wave shader properties
+//AL ABD Handle the animation of the wave shader properties
 -(void)Handle_animation{
     if(simulating) {
         
